@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/admin-layout :: adminHead('Impact Form')}"></head>
+<body>
+<div class="admin-wrapper">
+  <div th:replace="~{fragments/admin-layout :: sidebar('impact')}"></div>
+  <div class="admin-main">
+    <div th:replace="~{fragments/admin-layout :: topbar(${isNew} ? 'New Impact Stat' : 'Edit Impact Stat')}"></div>
+    <div class="admin-content">
+      <div class="admin-panel" style="max-width:600px;">
+        <div class="admin-panel-header">
+          <h5 th:text="${isNew} ? 'Add Impact Number' : 'Edit Impact Number'">Form</h5>
+          <a th:href="@{/admin/impact}" class="btn-outline-primary" style="font-size:0.82rem;padding:7px 14px;"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+        <div class="admin-panel-body">
+          <form th:action="@{/admin/impact/save}" method="post" data-validate>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="hidden" name="id" th:value="${impact.id}"/>
+            <div class="row g-3">
+              <div class="col-md-6"><label class="form-label-custom">Label *</label><input type="text" name="label" class="form-input-custom" th:value="${impact.label}" required placeholder="Families Served"/></div>
+              <div class="col-md-6"><label class="form-label-custom">Value *</label><input type="text" name="value" class="form-input-custom" th:value="${impact.value}" required placeholder="2,400+"/></div>
+              <div class="col-md-8"><label class="form-label-custom">Icon (Font Awesome class)</label><input type="text" name="iconClass" class="form-input-custom" th:value="${impact.iconClass}" placeholder="fas fa-home"/></div>
+              <div class="col-md-4"><label class="form-label-custom">Display Order</label><input type="number" name="displayOrder" class="form-input-custom" th:value="${impact.displayOrder}" value="1"/></div>
+              <div class="col-12"><label class="form-label-custom">Description</label><input type="text" name="description" class="form-input-custom" th:value="${impact.description}" placeholder="families received direct services"/></div>
+              <div class="col-12">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                  <input type="checkbox" name="active" value="true" th:checked="${impact.active}" style="width:16px;height:16px;"/> Show on website
+                </label>
+              </div>
+              <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn-primary-custom"><i class="fas fa-save"></i> Save</button>
+                <a th:href="@{/admin/impact}" class="btn-outline-primary">Cancel</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="~{fragments/admin-layout :: adminScripts}"></div>
+</body>
+</html>

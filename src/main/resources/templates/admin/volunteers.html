@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/admin-layout :: adminHead('Volunteers')}"></head>
+<body>
+<div class="admin-wrapper">
+  <div th:replace="~{fragments/admin-layout :: sidebar('volunteers')}"></div>
+  <div class="admin-main">
+    <div th:replace="~{fragments/admin-layout :: topbar('Manage Volunteers')}"></div>
+    <div class="admin-content">
+      <div th:if="${success}" class="alert-custom alert-success-custom mb-3 alert-auto-dismiss">
+        <i class="fas fa-check-circle me-2"></i><span th:text="${success}">Success</span>
+      </div>
+      <div class="row g-3 mb-4">
+        <div class="col-sm-4">
+          <div class="admin-stat-card">
+            <div class="label">Pending</div>
+            <div class="value" th:text="${pendingCount}">0</div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="admin-stat-card">
+            <div class="label">Active Volunteers</div>
+            <div class="value" th:text="${activeCount}">0</div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="admin-stat-card">
+            <div class="label">Total Applications</div>
+            <div class="value" th:text="${volunteers.size()}">0</div>
+          </div>
+        </div>
+      </div>
+      <div class="admin-panel">
+        <div class="admin-panel-header">
+          <h5>Volunteer Applications</h5>
+          <a th:href="@{/admin/volunteers/export/excel}" class="btn-outline-primary" style="font-size:0.78rem;padding:7px 12px;">
+            <i class="fas fa-file-excel"></i> Export Excel
+          </a>
+        </div>
+        <div class="admin-panel-body p-3">
+          <input id="tableSearch" type="text" class="form-input-custom mb-3" placeholder="Search volunteers..." style="max-width:300px;"/>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Name</th><th>Email</th><th>Phone</th><th>Skills</th><th>Status</th><th>Date Applied</th><th>Actions</th></tr>
+              </thead>
+              <tbody>
+                <tr th:each="v : ${volunteers}">
+                  <td style="font-weight:600;" th:text="${v.fullName}">Name</td>
+                  <td style="font-size:0.82rem;" th:text="${v.email}">email</td>
+                  <td style="font-size:0.82rem;" th:text="${v.phone}">phone</td>
+                  <td style="font-size:0.8rem;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" th:text="${v.skills}">Skills</td>
+                  <td>
+                    <span class="badge-status"
+                          th:classappend="${v.status.name() == 'ACTIVE'} ? ' badge-success' : (${v.status.name() == 'PENDING'} ? ' badge-warning' : (${v.status.name() == 'APPROVED'} ? ' badge-info' : ' badge-danger'))"
+                          th:text="${v.status}">Status</span>
+                  </td>
+                  <td style="font-size:0.8rem;" th:text="${#temporals.format(v.createdAt,'MMM d, yyyy')}">Date</td>
+                  <td>
+                    <a th:href="@{/admin/volunteers/{id}(id=${v.id})}" class="btn-outline-primary" style="font-size:0.75rem;padding:5px 10px;"><i class="fas fa-eye"></i></a>
+                  </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(volunteers)}">
+                  <td colspan="7" style="text-align:center;padding:32px;color:var(--text-mid);">No volunteer applications yet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="~{fragments/admin-layout :: adminScripts}"></div>
+</body>
+</html>

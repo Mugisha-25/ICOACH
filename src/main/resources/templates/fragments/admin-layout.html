@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- Admin Sidebar Fragment -->
+<aside th:fragment="sidebar(activePage)" class="admin-sidebar">
+  <div class="sidebar-header">
+    <h3>Bridge<span>Hope</span></h3>
+    <p>Administration Portal</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="sidebar-nav-section">Overview</div>
+    <a th:href="@{/admin/dashboard}"
+       th:classappend="${activePage == 'dashboard'} ? ' active' : ''"
+       class="sidebar-nav-item">
+      <i class="fas fa-tachometer-alt icon"></i> Dashboard
+    </a>
+
+    <div class="sidebar-nav-section">Content</div>
+    <a th:href="@{/admin/programs}"
+       th:classappend="${activePage == 'programs'} ? ' active' : ''"
+       class="sidebar-nav-item"
+       sec:authorize="hasAnyRole('SUPER_ADMIN','ADMIN','PROGRAM_MANAGER')">
+      <i class="fas fa-th-large icon"></i> Programs
+    </a>
+    <a th:href="@{/admin/events}"
+       th:classappend="${activePage == 'events'} ? ' active' : ''"
+       class="sidebar-nav-item"
+       sec:authorize="hasAnyRole('SUPER_ADMIN','ADMIN')">
+      <i class="fas fa-calendar icon"></i> Events
+    </a>
+    <a th:href="@{/admin/news}"
+       th:classappend="${activePage == 'news'} ? ' active' : ''"
+       class="sidebar-nav-item"
+       sec:authorize="hasAnyRole('SUPER_ADMIN','ADMIN','COMMUNICATIONS')">
+      <i class="fas fa-newspaper icon"></i> News
+    </a>
+    <a th:href="@{/admin/team}"
+       th:classappend="${activePage == 'team'} ? ' active' : ''"
+       class="sidebar-nav-item"
+       sec:authorize="hasAnyRole('SUPER_ADMIN','ADMIN')">
+      <i class="fas fa-users icon"></i> Team &amp; Board
+    </a>
+    <a th:href="@{/admin/impact}"
+       th:classappend="${activePage == 'impact'} ? ' active' : ''"
+       class="sidebar-nav-item"
+       sec:authorize="hasAnyRole('SUPER_ADMIN','ADMIN')">
+      <i class="fas fa-chart-bar icon"></i> Impact Numbers
+    </a>
+
+    <div class="sidebar-nav-section">Operations</div>
+    <a th:href="@{/admin/donations}"
+       th:classappend="${activePage == 'donations'} ? ' active' : ''"
+       class="sidebar-nav-item"
+       sec:authorize="hasAnyRole('SUPER_ADMIN','ADMIN','FINANCE')">
+      <i class="fas fa-dollar-sign icon"></i> Donations
+    </a>
+    <a th:href="@{/admin/volunteers}"
+       th:classappend="${activePage == 'volunteers'} ? ' active' : ''"
+       class="sidebar-nav-item"
+       sec:authorize="hasAnyRole('SUPER_ADMIN','ADMIN','VOLUNTEER_COORDINATOR')">
+      <i class="fas fa-hands-helping icon"></i> Volunteers
+    </a>
+    <a th:href="@{/admin/contacts}"
+       th:classappend="${activePage == 'contacts'} ? ' active' : ''"
+       class="sidebar-nav-item"
+       sec:authorize="hasAnyRole('SUPER_ADMIN','ADMIN')">
+      <i class="fas fa-envelope icon"></i> Messages
+    </a>
+
+    <div class="sidebar-nav-section" sec:authorize="hasRole('SUPER_ADMIN')">System</div>
+    <a th:href="@{/admin/users}"
+       th:classappend="${activePage == 'users'} ? ' active' : ''"
+       class="sidebar-nav-item"
+       sec:authorize="hasRole('SUPER_ADMIN')">
+      <i class="fas fa-user-cog icon"></i> Users &amp; Roles
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a th:href="@{/}" class="sidebar-nav-item" style="border-radius:8px;">
+      <i class="fas fa-globe icon"></i> View Website
+    </a>
+    <form th:action="@{/logout}" method="post">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+      <button type="submit" class="sidebar-nav-item w-100 border-0 bg-transparent text-start"
+              style="cursor:pointer;color:rgba(255,255,255,0.72);">
+        <i class="fas fa-sign-out-alt icon"></i> Sign Out
+      </button>
+    </form>
+  </div>
+</aside>
+
+<!-- Admin Head -->
+<head th:fragment="adminHead(pageTitle)">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title th:text="${pageTitle} + ' — Admin | BridgeHope'">Admin | BridgeHope</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+
+<!-- Admin Topbar -->
+<header th:fragment="topbar(pageTitle)" class="admin-topbar">
+  <div class="d-flex align-items-center gap-3">
+    <button class="d-lg-none border-0 bg-transparent" id="sidebarToggle" style="font-size:1.2rem;color:var(--primary);">
+      <i class="fas fa-bars"></i>
+    </button>
+    <span class="admin-topbar-title" th:text="${pageTitle}">Dashboard</span>
+  </div>
+  <div class="d-flex align-items-center gap-3">
+    <button class="dark-toggle-btn" id="darkModeToggle" style="background:rgba(27,58,107,0.1);color:var(--primary);">
+      <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+    <div class="d-flex align-items-center gap-2">
+      <div style="width:34px;height:34px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;color:#fff;">
+        <i class="fas fa-user" style="font-size:0.85rem;"></i>
+      </div>
+      <div class="d-none d-md-block">
+        <div style="font-size:0.85rem;font-weight:600;" sec:authentication="name">admin</div>
+        <div style="font-size:0.72rem;color:var(--text-mid);" sec:authentication="authorities">ROLE_ADMIN</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Admin Scripts -->
+<div th:fragment="adminScripts">
+  <div id="sidebarOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script th:src="@{/js/main.js}"></script>
+</div>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/admin-layout :: adminHead('Program Form')}"></head>
+<body>
+<div class="admin-wrapper">
+  <div th:replace="~{fragments/admin-layout :: sidebar('programs')}"></div>
+  <div class="admin-main">
+    <div th:replace="~{fragments/admin-layout :: topbar(${isNew} ? 'New Program' : 'Edit Program')}"></div>
+    <div class="admin-content">
+      <div class="admin-panel" style="max-width:800px;">
+        <div class="admin-panel-header">
+          <h5 th:text="${isNew} ? 'Create New Program' : 'Edit Program'">Form</h5>
+          <a th:href="@{/admin/programs}" class="btn-outline-primary" style="font-size:0.82rem;padding:7px 14px;">
+            <i class="fas fa-arrow-left"></i> Back
+          </a>
+        </div>
+        <div class="admin-panel-body">
+          <form th:action="@{/admin/programs/save}" method="post" data-validate>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="hidden" th:field="*{program.id}"/>
+            <div class="row g-3">
+              <div class="col-md-8">
+                <label class="form-label-custom">Program Name *</label>
+                <input type="text" name="name" class="form-input-custom" th:value="${program.name}" required/>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label-custom">Slug</label>
+                <input type="text" name="slug" class="form-input-custom" th:value="${program.slug}" placeholder="auto-generated"/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Category</label>
+                <input type="text" name="category" class="form-input-custom" th:value="${program.category}"/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Target Audience</label>
+                <input type="text" name="targetAudience" class="form-input-custom" th:value="${program.targetAudience}"/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Schedule</label>
+                <input type="text" name="schedule" class="form-input-custom" th:value="${program.schedule}"/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Location</label>
+                <input type="text" name="location" class="form-input-custom" th:value="${program.location}"/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Icon Class (Font Awesome)</label>
+                <input type="text" name="iconClass" class="form-input-custom" th:value="${program.iconClass}" placeholder="fas fa-graduation-cap"/>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label-custom">Display Order</label>
+                <input type="number" name="displayOrder" class="form-input-custom" th:value="${program.displayOrder}" value="1"/>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label-custom">Status</label>
+                <select name="active" class="form-input-custom">
+                  <option value="true" th:selected="${program.active}">Active</option>
+                  <option value="false" th:selected="${!program.active}">Inactive</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label-custom">Short Description *</label>
+                <textarea name="shortDescription" class="form-input-custom" rows="3" required style="resize:vertical;" th:text="${program.shortDescription}"></textarea>
+              </div>
+              <div class="col-12">
+                <label class="form-label-custom">Full Description</label>
+                <textarea name="fullDescription" class="form-input-custom" rows="6" style="resize:vertical;" th:text="${program.fullDescription}"></textarea>
+              </div>
+              <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn-primary-custom"><i class="fas fa-save"></i> Save Program</button>
+                <a th:href="@{/admin/programs}" class="btn-outline-primary">Cancel</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="~{fragments/admin-layout :: adminScripts}"></div>
+</body>
+</html>

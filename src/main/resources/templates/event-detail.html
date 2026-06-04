@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head(${event.title})}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+<section class="page-hero">
+  <div class="container">
+    <h1 th:text="${event.title}">Event Title</h1>
+    <p th:text="${event.category}">Category</p>
+    <div class="breadcrumb-custom"><a href="/">Home</a><span>/</span><a href="/events">Events</a><span>/</span><span th:text="${event.title}">Event</span></div>
+  </div>
+</section>
+<section class="section-pad">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-8 fade-left">
+        <div style="color:var(--text-mid);line-height:1.8;" th:utext="${event.description}">Event description</div>
+      </div>
+      <div class="col-lg-4 fade-right">
+        <div class="form-card" style="position:sticky;top:100px;">
+          <h5 style="color:var(--primary);margin-bottom:20px;">Event Details</h5>
+          <div class="d-flex flex-column gap-3" style="font-size:0.9rem;">
+            <div class="d-flex gap-3 align-items-start">
+              <i class="fas fa-calendar mt-1" style="color:var(--accent);width:16px;"></i>
+              <div>
+                <div style="font-weight:600;font-size:0.8rem;color:var(--text-light);text-transform:uppercase;">Date</div>
+                <div th:text="${#temporals.format(event.startDate, 'MMMM d, yyyy')}">Date</div>
+              </div>
+            </div>
+            <div class="d-flex gap-3 align-items-start">
+              <i class="fas fa-clock mt-1" style="color:var(--accent);width:16px;"></i>
+              <div>
+                <div style="font-weight:600;font-size:0.8rem;color:var(--text-light);text-transform:uppercase;">Time</div>
+                <div th:text="${#temporals.format(event.startDate,'h:mm a') + (event.endDate != null ? ' – ' + #temporals.format(event.endDate,'h:mm a') : '')}">Time</div>
+              </div>
+            </div>
+            <div th:if="${event.location}" class="d-flex gap-3 align-items-start">
+              <i class="fas fa-map-marker-alt mt-1" style="color:var(--accent);width:16px;"></i>
+              <div>
+                <div style="font-weight:600;font-size:0.8rem;color:var(--text-light);text-transform:uppercase;">Location</div>
+                <div th:text="${event.location}">Location</div>
+              </div>
+            </div>
+            <div th:if="${event.maxAttendees != null}" class="d-flex gap-3 align-items-start">
+              <i class="fas fa-users mt-1" style="color:var(--accent);width:16px;"></i>
+              <div>
+                <div style="font-weight:600;font-size:0.8rem;color:var(--text-light);text-transform:uppercase;">Capacity</div>
+                <div th:text="${event.maxAttendees + ' attendees'}">Capacity</div>
+              </div>
+            </div>
+          </div>
+          <hr class="divider"/>
+          <a th:if="${event.registrationRequired}" th:href="@{/contact}" class="btn-accent w-100 justify-content-center">
+            <i class="fas fa-calendar-check"></i> Register for This Event
+          </a>
+          <a th:unless="${event.registrationRequired}" th:href="@{/contact}" class="btn-primary-custom w-100 justify-content-center">
+            <i class="fas fa-info-circle"></i> Get More Information
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

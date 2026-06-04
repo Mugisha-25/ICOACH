@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Donate')}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+<section class="page-hero">
+  <div class="container">
+    <h1>Support Our Mission</h1>
+    <p>Your generosity funds programs that transform lives and strengthen families</p>
+    <div class="breadcrumb-custom"><a href="/">Home</a><span>/</span><span>Donate</span></div>
+  </div>
+</section>
+<section class="section-pad">
+  <div class="container">
+    <div class="row g-5 justify-content-center">
+      <div class="col-lg-5 fade-left">
+        <h3 style="color:var(--primary);margin-bottom:16px;">Why Your Gift Matters</h3>
+        <p style="color:var(--text-mid);">Every dollar you contribute goes directly to serving families in our community. Here's what your gift can provide:</p>
+        <div class="d-flex flex-column gap-3 mt-4">
+          <div class="d-flex gap-3 align-items-center">
+            <div style="width:48px;height:48px;background:rgba(244,164,27,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;color:var(--accent);">$10</div>
+            <div style="font-size:0.9rem;color:var(--text-mid);">Provides school supplies for one student for a month</div>
+          </div>
+          <div class="d-flex gap-3 align-items-center">
+            <div style="width:48px;height:48px;background:rgba(244,164,27,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;color:var(--accent);">$50</div>
+            <div style="font-size:0.9rem;color:var(--text-mid);">Covers one week of after-school tutoring for a child</div>
+          </div>
+          <div class="d-flex gap-3 align-items-center">
+            <div style="width:48px;height:48px;background:rgba(244,164,27,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;color:var(--accent);">$100</div>
+            <div style="font-size:0.9rem;color:var(--text-mid);">Funds driving lessons for one community member</div>
+          </div>
+          <div class="d-flex gap-3 align-items-center">
+            <div style="width:48px;height:48px;background:rgba(244,164,27,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;color:var(--accent);">$200</div>
+            <div style="font-size:0.9rem;color:var(--text-mid);">Supports a family through a full month of workforce coaching</div>
+          </div>
+        </div>
+        <div class="form-card mt-5" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border:none;">
+          <h5 style="color:#fff;">Secure &amp; Transparent</h5>
+          <p style="color:rgba(255,255,255,0.8);font-size:0.85rem;margin:8px 0 0;">BridgeHope is a registered 501(c)(3) nonprofit. Your donation may be tax-deductible. You'll receive an instant donation receipt via email.</p>
+          <div class="d-flex gap-3 mt-3 flex-wrap">
+            <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;"><i class="fas fa-lock"></i> Secure SSL</div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;"><i class="fas fa-receipt"></i> Instant Receipt</div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;"><i class="fas fa-check-circle"></i> 501(c)(3)</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7 fade-right">
+        <div class="form-card">
+          <h4 style="color:var(--primary);margin-bottom:20px;">Make Your Donation</h4>
+
+          <!-- Donation Type -->
+          <div class="mb-4">
+            <label class="form-label-custom">Donation Frequency</label>
+            <div class="d-flex gap-2">
+              <button type="button" class="donation-type-btn btn-primary-custom active" data-type="ONE_TIME" style="flex:1;justify-content:center;">
+                <i class="fas fa-heart"></i> One-Time
+              </button>
+              <button type="button" class="donation-type-btn btn-outline-primary" data-type="MONTHLY" style="flex:1;justify-content:center;">
+                <i class="fas fa-sync"></i> Monthly
+              </button>
+            </div>
+            <input type="hidden" id="donationTypeValue" value="ONE_TIME"/>
+          </div>
+
+          <form th:action="@{/donate}" method="post" data-validate>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="hidden" name="donationType" id="donationTypeHidden" value="ONE_TIME"/>
+
+            <div class="mb-3">
+              <label class="form-label-custom">Select Amount</label>
+              <div class="donation-amounts">
+                <button type="button" class="donation-amount-btn" data-amount="10">$10</button>
+                <button type="button" class="donation-amount-btn" data-amount="50">$50</button>
+                <button type="button" class="donation-amount-btn active" data-amount="100">$100</button>
+                <button type="button" class="donation-amount-btn" data-amount="200">$200</button>
+                <button type="button" class="donation-amount-btn" data-amount="other">Other</button>
+              </div>
+              <input type="number" name="amount" id="donationAmount" class="form-input-custom mt-2" placeholder="Enter amount ($)" value="100" min="1" required/>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label-custom">Designate Your Gift</label>
+              <select name="purpose" class="form-input-custom">
+                <option value="General Support">General Support — Where Needed Most</option>
+                <option value="Youth Programs">Youth &amp; Education Programs</option>
+                <option value="Workforce Development">Workforce Development</option>
+                <option value="Early Childhood">Early Childhood Education</option>
+                <option value="Driving Support">Driving Support Program</option>
+                <option value="Community Events">Community Events</option>
+              </select>
+            </div>
+
+            <hr class="divider"/>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label-custom">First Name *</label>
+                <input type="text" name="firstName" class="form-input-custom" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Last Name *</label>
+                <input type="text" name="lastName" class="form-input-custom" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Email Address *</label>
+                <input type="email" name="email" class="form-input-custom" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Phone</label>
+                <input type="tel" name="phone" class="form-input-custom" placeholder="Optional"/>
+              </div>
+              <div class="col-12">
+                <label class="form-label-custom">Address</label>
+                <input type="text" name="address" class="form-input-custom" placeholder="Optional — for receipt"/>
+              </div>
+              <div class="col-12">
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:0.88rem;">
+                  <input type="checkbox" name="anonymous" value="true" style="width:16px;height:16px;"/>
+                  Make this donation anonymous
+                </label>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn-accent" style="width:100%;justify-content:center;font-size:1rem;padding:14px;">
+                  <i class="fas fa-heart"></i> Complete Donation
+                </button>
+                <p style="font-size:0.75rem;color:var(--text-mid);text-align:center;margin-top:10px;">
+                  <i class="fas fa-lock me-1"></i> Secured with SSL encryption
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script>
+// sync hidden type field with button
+document.querySelectorAll('.donation-type-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.getElementById('donationTypeHidden').value = this.dataset.type;
+  });
+});
+</script>
+</body>
+</html>

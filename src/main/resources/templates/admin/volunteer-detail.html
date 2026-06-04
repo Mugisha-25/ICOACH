@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/admin-layout :: adminHead('Volunteer Detail')}"></head>
+<body>
+<div class="admin-wrapper">
+  <div th:replace="~{fragments/admin-layout :: sidebar('volunteers')}"></div>
+  <div class="admin-main">
+    <div th:replace="~{fragments/admin-layout :: topbar('Volunteer Detail')}"></div>
+    <div class="admin-content">
+      <div th:if="${success}" class="alert-custom alert-success-custom mb-3 alert-auto-dismiss">
+        <i class="fas fa-check-circle me-2"></i><span th:text="${success}">Success</span>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="admin-panel">
+            <div class="admin-panel-header">
+              <h5><i class="fas fa-user me-2"></i><span th:text="${volunteer.fullName}">Name</span></h5>
+              <a th:href="@{/admin/volunteers}" class="btn-outline-primary" style="font-size:0.82rem;padding:7px 14px;"><i class="fas fa-arrow-left"></i> Back</a>
+            </div>
+            <div class="admin-panel-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Email</div>
+                  <div th:text="${volunteer.email}">email</div>
+                </div>
+                <div class="col-md-6">
+                  <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Phone</div>
+                  <div th:text="${volunteer.phone}">phone</div>
+                </div>
+                <div class="col-md-6">
+                  <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Location</div>
+                  <div th:text="${(volunteer.city ?: '') + ' ' + (volunteer.state ?: '')}">City, State</div>
+                </div>
+                <div class="col-md-6">
+                  <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Hours Logged</div>
+                  <div style="font-weight:700;" th:text="${volunteer.hoursLogged + ' hours'}">0 hours</div>
+                </div>
+                <div class="col-12">
+                  <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:4px;">Skills</div>
+                  <div style="font-size:0.9rem;" th:text="${volunteer.skills}">Skills</div>
+                </div>
+                <div class="col-12">
+                  <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:4px;">Interests</div>
+                  <div style="font-size:0.9rem;" th:text="${volunteer.interests}">Interests</div>
+                </div>
+                <div class="col-12">
+                  <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:4px;">Availability</div>
+                  <div style="font-size:0.9rem;" th:text="${volunteer.availability}">Availability</div>
+                </div>
+                <div class="col-12">
+                  <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:4px;">Motivation</div>
+                  <div style="font-size:0.9rem;" th:text="${volunteer.motivation}">Motivation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="admin-panel mb-3">
+            <div class="admin-panel-header"><h5>Update Status</h5></div>
+            <div class="admin-panel-body">
+              <form th:action="@{/admin/volunteers/{id}/status(id=${volunteer.id})}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <select name="status" class="form-input-custom mb-3">
+                  <option th:each="s : ${T(com.example.icoach.model.VolunteerApplication.VolunteerStatus).values()}"
+                          th:value="${s}" th:text="${s}"
+                          th:selected="${s == volunteer.status}">Status</option>
+                </select>
+                <button type="submit" class="btn-primary-custom w-100 justify-content-center"><i class="fas fa-save"></i> Update Status</button>
+              </form>
+            </div>
+          </div>
+          <div class="admin-panel">
+            <div class="admin-panel-header"><h5>Log Volunteer Hours</h5></div>
+            <div class="admin-panel-body">
+              <form th:action="@{/admin/volunteers/{id}/hours(id=${volunteer.id})}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <label class="form-label-custom">Hours to Add</label>
+                <input type="number" name="hours" class="form-input-custom mb-3" min="0.5" step="0.5" placeholder="e.g., 2.5" required/>
+                <button type="submit" class="btn-accent w-100 justify-content-center"><i class="fas fa-clock"></i> Log Hours</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="~{fragments/admin-layout :: adminScripts}"></div>
+</body>
+</html>

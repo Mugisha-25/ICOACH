@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Events')}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+<section class="page-hero">
+  <div class="container">
+    <h1>Events &amp; Programs</h1>
+    <p>Connect, learn, and grow with our community events and workshops</p>
+    <div class="breadcrumb-custom"><a href="/">Home</a><span>/</span><span>Events</span></div>
+  </div>
+</section>
+<section class="section-pad">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="overline">What's Coming Up</div>
+      <h2>Upcoming Events</h2>
+    </div>
+    <div class="row g-4">
+      <div th:each="event : ${upcomingEvents}" class="col-lg-6 fade-up">
+        <div class="event-card flex-column h-100">
+          <div class="d-flex gap-3">
+            <div class="event-date-box" style="min-width:72px;">
+              <span class="month" th:text="${#temporals.format(event.startDate,'MMM')}">Jan</span>
+              <span class="day" th:text="${#temporals.format(event.startDate,'dd')}">01</span>
+              <span style="font-size:0.6rem;opacity:0.7;margin-top:2px;" th:text="${#temporals.format(event.startDate,'yyyy')}">2025</span>
+            </div>
+            <div class="event-info flex-grow-1">
+              <div th:if="${event.featured}" style="display:inline-block;background:var(--accent);color:#fff;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-bottom:6px;text-transform:uppercase;">Featured</div>
+              <h5 th:text="${event.title}">Event Title</h5>
+              <p th:text="${event.summary}">Event summary</p>
+              <div class="event-meta">
+                <span><i class="fas fa-map-marker-alt"></i> <span th:text="${event.location}">Location</span></span>
+                <span><i class="fas fa-clock"></i> <span th:text="${#temporals.format(event.startDate,'h:mm a')}">6:00 PM</span></span>
+                <span th:if="${event.registrationRequired}"><i class="fas fa-ticket-alt"></i> Registration required</span>
+                <span th:if="${event.maxAttendees != null}"><i class="fas fa-users"></i> Limit: <span th:text="${event.maxAttendees}"></span></span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 d-flex gap-2">
+            <a th:href="@{/events/{id}(id=${event.id})}" class="btn-primary-custom" style="font-size:0.82rem;padding:8px 18px;flex:1;justify-content:center;">View Details</a>
+            <a th:href="@{/contact}" class="btn-outline-primary" style="font-size:0.82rem;padding:8px 14px;" title="Register"><i class="fas fa-calendar-plus"></i></a>
+          </div>
+        </div>
+      </div>
+      <div th:if="${#lists.isEmpty(upcomingEvents)}" class="col-12 text-center py-5">
+        <i class="fas fa-calendar-times fa-3x mb-3 d-block" style="color:var(--text-light);"></i>
+        <p style="color:var(--text-mid);">No upcoming events scheduled. Check back soon!</p>
+      </div>
+    </div>
+  </div>
+</section>
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

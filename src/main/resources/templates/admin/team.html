@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/admin-layout :: adminHead('Team')}"></head>
+<body>
+<div class="admin-wrapper">
+  <div th:replace="~{fragments/admin-layout :: sidebar('team')}"></div>
+  <div class="admin-main">
+    <div th:replace="~{fragments/admin-layout :: topbar('Team & Board')}"></div>
+    <div class="admin-content">
+      <div th:if="${success}" class="alert-custom alert-success-custom mb-3 alert-auto-dismiss"><i class="fas fa-check-circle me-2"></i><span th:text="${success}">Success</span></div>
+
+      <div class="admin-panel mb-4">
+        <div class="admin-panel-header">
+          <h5>Staff Members (<span th:text="${staff.size()}">0</span>)</h5>
+          <a th:href="@{/admin/team/staff/new}" class="btn-primary-custom" style="font-size:0.82rem;padding:9px 16px;"><i class="fas fa-plus"></i> Add Staff</a>
+        </div>
+        <div class="admin-panel-body p-0">
+          <table class="admin-table">
+            <thead><tr><th>Name</th><th>Title</th><th>Email</th><th>Order</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr th:each="m : ${staff}">
+                <td style="font-weight:600;" th:text="${m.fullName}">Name</td>
+                <td style="font-size:0.82rem;" th:text="${m.title}">Title</td>
+                <td style="font-size:0.82rem;" th:text="${m.email}">email</td>
+                <td th:text="${m.displayOrder}">1</td>
+                <td><span class="badge-status" th:classappend="${m.active} ? ' badge-success' : ' badge-gray'" th:text="${m.active} ? 'Active' : 'Inactive'">Active</span></td>
+                <td>
+                  <div class="d-flex gap-1">
+                    <a th:href="@{/admin/team/staff/{id}/edit(id=${m.id})}" class="btn-outline-primary" style="font-size:0.75rem;padding:5px 10px;"><i class="fas fa-edit"></i></a>
+                    <form th:action="@{/admin/team/staff/{id}/delete(id=${m.id})}" method="post" style="display:inline;">
+                      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                      <button type="submit" class="btn-outline-primary" style="font-size:0.75rem;padding:5px 10px;border-color:var(--danger);color:var(--danger);" data-confirm="Delete this staff member?"><i class="fas fa-trash"></i></button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel">
+        <div class="admin-panel-header">
+          <h5>Board Members (<span th:text="${board.size()}">0</span>)</h5>
+          <a th:href="@{/admin/team/board/new}" class="btn-primary-custom" style="font-size:0.82rem;padding:9px 16px;"><i class="fas fa-plus"></i> Add Board Member</a>
+        </div>
+        <div class="admin-panel-body p-0">
+          <table class="admin-table">
+            <thead><tr><th>Name</th><th>Title</th><th>Profession</th><th>Term</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr th:each="m : ${board}">
+                <td style="font-weight:600;" th:text="${m.fullName}">Name</td>
+                <td style="font-size:0.82rem;" th:text="${m.title}">Title</td>
+                <td style="font-size:0.82rem;" th:text="${m.profession}">Profession</td>
+                <td style="font-size:0.82rem;" th:text="${m.term}">Term</td>
+                <td>
+                  <div class="d-flex gap-1">
+                    <a th:href="@{/admin/team/board/{id}/edit(id=${m.id})}" class="btn-outline-primary" style="font-size:0.75rem;padding:5px 10px;"><i class="fas fa-edit"></i></a>
+                    <form th:action="@{/admin/team/board/{id}/delete(id=${m.id})}" method="post" style="display:inline;">
+                      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                      <button type="submit" class="btn-outline-primary" style="font-size:0.75rem;padding:5px 10px;border-color:var(--danger);color:var(--danger);" data-confirm="Delete?"><i class="fas fa-trash"></i></button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="~{fragments/admin-layout :: adminScripts}"></div>
+</body>
+</html>

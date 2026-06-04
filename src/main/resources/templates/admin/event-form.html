@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/admin-layout :: adminHead('Event Form')}"></head>
+<body>
+<div class="admin-wrapper">
+  <div th:replace="~{fragments/admin-layout :: sidebar('events')}"></div>
+  <div class="admin-main">
+    <div th:replace="~{fragments/admin-layout :: topbar(${isNew} ? 'New Event' : 'Edit Event')}"></div>
+    <div class="admin-content">
+      <div class="admin-panel" style="max-width:800px;">
+        <div class="admin-panel-header">
+          <h5 th:text="${isNew} ? 'Create New Event' : 'Edit Event'">Form</h5>
+          <a th:href="@{/admin/events}" class="btn-outline-primary" style="font-size:0.82rem;padding:7px 14px;"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+        <div class="admin-panel-body">
+          <form th:action="@{/admin/events/save}" method="post" data-validate>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="hidden" name="id" th:value="${event.id}"/>
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label-custom">Event Title *</label>
+                <input type="text" name="title" class="form-input-custom" th:value="${event.title}" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Start Date &amp; Time</label>
+                <input type="datetime-local" name="startDate" class="form-input-custom"
+                       th:value="${event.startDate != null ? #temporals.format(event.startDate,'yyyy-MM-dd''T''HH:mm') : ''}"/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">End Date &amp; Time</label>
+                <input type="datetime-local" name="endDate" class="form-input-custom"
+                       th:value="${event.endDate != null ? #temporals.format(event.endDate,'yyyy-MM-dd''T''HH:mm') : ''}"/>
+              </div>
+              <div class="col-md-8">
+                <label class="form-label-custom">Location</label>
+                <input type="text" name="location" class="form-input-custom" th:value="${event.location}"/>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label-custom">Category</label>
+                <input type="text" name="category" class="form-input-custom" th:value="${event.category}"/>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label-custom">Max Attendees</label>
+                <input type="number" name="maxAttendees" class="form-input-custom" th:value="${event.maxAttendees}"/>
+              </div>
+              <div class="col-12">
+                <label class="form-label-custom">Summary</label>
+                <textarea name="summary" class="form-input-custom" rows="2" style="resize:vertical;" th:text="${event.summary}"></textarea>
+              </div>
+              <div class="col-12">
+                <label class="form-label-custom">Full Description</label>
+                <textarea name="description" class="form-input-custom" rows="6" style="resize:vertical;" th:text="${event.description}"></textarea>
+              </div>
+              <div class="col-md-3">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                  <input type="checkbox" name="published" value="true" th:checked="${event.published}" style="width:16px;height:16px;"/> Published
+                </label>
+              </div>
+              <div class="col-md-3">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                  <input type="checkbox" name="featured" value="true" th:checked="${event.featured}" style="width:16px;height:16px;"/> Featured
+                </label>
+              </div>
+              <div class="col-md-3">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                  <input type="checkbox" name="registrationRequired" value="true" th:checked="${event.registrationRequired}" style="width:16px;height:16px;"/> Registration Required
+                </label>
+              </div>
+              <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn-primary-custom"><i class="fas fa-save"></i> Save Event</button>
+                <a th:href="@{/admin/events}" class="btn-outline-primary">Cancel</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="~{fragments/admin-layout :: adminScripts}"></div>
+</body>
+</html>

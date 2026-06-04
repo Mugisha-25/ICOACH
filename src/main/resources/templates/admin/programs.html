@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/admin-layout :: adminHead('Programs')}"></head>
+<body>
+<div class="admin-wrapper">
+  <div th:replace="~{fragments/admin-layout :: sidebar('programs')}"></div>
+  <div class="admin-main">
+    <div th:replace="~{fragments/admin-layout :: topbar('Manage Programs')}"></div>
+    <div class="admin-content">
+      <div th:if="${success}" class="alert-custom alert-success-custom mb-3 alert-auto-dismiss">
+        <i class="fas fa-check-circle me-2"></i><span th:text="${success}">Success</span>
+      </div>
+      <div class="admin-panel">
+        <div class="admin-panel-header">
+          <h5>All Programs (<span th:text="${programs.size()}">0</span>)</h5>
+          <a th:href="@{/admin/programs/new}" class="btn-primary-custom" style="font-size:0.82rem;padding:9px 16px;">
+            <i class="fas fa-plus"></i> New Program
+          </a>
+        </div>
+        <div class="admin-panel-body p-3">
+          <input id="tableSearch" type="text" class="form-input-custom mb-3" placeholder="Search programs..." style="max-width:300px;"/>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr><th>#</th><th>Name</th><th>Category</th><th>Audience</th><th>Status</th><th>Order</th><th>Actions</th></tr>
+              </thead>
+              <tbody>
+                <tr th:each="p : ${programs}">
+                  <td th:text="${p.id}">1</td>
+                  <td>
+                    <div style="font-weight:600;" th:text="${p.name}">Name</div>
+                    <div style="font-size:0.75rem;color:var(--text-mid);" th:text="${p.slug}">slug</div>
+                  </td>
+                  <td th:text="${p.category}">Category</td>
+                  <td style="font-size:0.82rem;" th:text="${p.targetAudience}">Audience</td>
+                  <td>
+                    <span class="badge-status" th:classappend="${p.active} ? ' badge-success' : ' badge-gray'"
+                          th:text="${p.active} ? 'Active' : 'Inactive'">Active</span>
+                  </td>
+                  <td th:text="${p.displayOrder}">1</td>
+                  <td>
+                    <div class="d-flex gap-1 flex-wrap">
+                      <a th:href="@{/admin/programs/{id}/edit(id=${p.id})}" class="btn-outline-primary" style="font-size:0.75rem;padding:5px 10px;"><i class="fas fa-edit"></i></a>
+                      <a th:href="@{/programs/{slug}(slug=${p.slug})}" target="_blank" class="btn-outline-primary" style="font-size:0.75rem;padding:5px 10px;"><i class="fas fa-eye"></i></a>
+                      <form th:action="@{/admin/programs/{id}/delete(id=${p.id})}" method="post" style="display:inline;">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <button type="submit" class="btn-outline-primary" style="font-size:0.75rem;padding:5px 10px;border-color:var(--danger);color:var(--danger);"
+                                data-confirm="Delete this program?"><i class="fas fa-trash"></i></button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(programs)}">
+                  <td colspan="7" style="text-align:center;padding:32px;color:var(--text-mid);">No programs found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="~{fragments/admin-layout :: adminScripts}"></div>
+</body>
+</html>

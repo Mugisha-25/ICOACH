@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head(${program.name})}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}"></nav>
+
+<section class="page-hero">
+  <div class="container">
+    <h1 th:text="${program.name}">Program Name</h1>
+    <p th:text="${program.category}">Category</p>
+    <div class="breadcrumb-custom">
+      <a href="/">Home</a><span>/</span>
+      <a href="/programs">Programs</a><span>/</span>
+      <span th:text="${program.name}">Program</span>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-8 fade-left">
+        <div class="program-icon mb-4" style="width:80px;height:80px;font-size:2rem;">
+          <i th:class="${program.iconClass ?: 'fas fa-star'}"></i>
+        </div>
+        <h2 th:text="${program.name}" style="color:var(--primary);">Program Name</h2>
+        <div class="mt-4" style="color:var(--text-mid);line-height:1.8;" th:utext="${program.fullDescription}">Full description</div>
+      </div>
+      <div class="col-lg-4 fade-right">
+        <div class="form-card" style="position:sticky;top:100px;">
+          <h5 style="color:var(--primary);margin-bottom:20px;">Program Details</h5>
+          <div class="d-flex flex-column gap-3" style="font-size:0.9rem;">
+            <div th:if="${program.targetAudience}" class="d-flex gap-3 align-items-start">
+              <i class="fas fa-users mt-1" style="color:var(--accent);width:16px;"></i>
+              <div><div style="font-weight:600;font-size:0.8rem;color:var(--text-light);text-transform:uppercase;">For</div><div th:text="${program.targetAudience}">Audience</div></div>
+            </div>
+            <div th:if="${program.schedule}" class="d-flex gap-3 align-items-start">
+              <i class="fas fa-clock mt-1" style="color:var(--accent);width:16px;"></i>
+              <div><div style="font-weight:600;font-size:0.8rem;color:var(--text-light);text-transform:uppercase;">Schedule</div><div th:text="${program.schedule}">Schedule</div></div>
+            </div>
+            <div th:if="${program.location}" class="d-flex gap-3 align-items-start">
+              <i class="fas fa-map-marker-alt mt-1" style="color:var(--accent);width:16px;"></i>
+              <div><div style="font-weight:600;font-size:0.8rem;color:var(--text-light);text-transform:uppercase;">Location</div><div th:text="${program.location}">Location</div></div>
+            </div>
+          </div>
+          <hr class="divider"/>
+          <a th:href="@{/contact}" class="btn-accent w-100 justify-content-center mt-2">
+            <i class="fas fa-envelope"></i> Get More Information
+          </a>
+          <a th:href="@{/volunteer}" class="btn-outline-primary w-100 justify-content-center mt-2">
+            <i class="fas fa-hands-helping"></i> Volunteer for This Program
+          </a>
+        </div>
+      </div>
+    </div>
+    <hr class="divider"/>
+    <h4 style="color:var(--primary);margin-bottom:24px;">Other Programs</h4>
+    <div class="row g-3">
+      <div th:each="p : ${otherPrograms}"
+           th:if="${p.id != program.id}"
+           class="col-md-4 fade-up">
+        <div class="program-card">
+          <div class="program-icon" style="width:44px;height:44px;font-size:1rem;"><i th:class="${p.iconClass ?: 'fas fa-star'}"></i></div>
+          <h5 style="font-size:0.95rem;color:var(--primary);margin:12px 0 6px;" th:text="${p.name}">Name</h5>
+          <p style="font-size:0.82rem;" th:text="${#strings.abbreviate(p.shortDescription,80)}">Desc</p>
+          <a th:href="@{/programs/{slug}(slug=${p.slug})}" style="font-size:0.8rem;color:var(--accent);font-weight:600;">Learn more →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

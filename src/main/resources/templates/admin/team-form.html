@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/admin-layout :: adminHead('Staff Form')}"></head>
+<body>
+<div class="admin-wrapper">
+  <div th:replace="~{fragments/admin-layout :: sidebar('team')}"></div>
+  <div class="admin-main">
+    <div th:replace="~{fragments/admin-layout :: topbar(${isNew} ? 'Add Staff Member' : 'Edit Staff Member')}"></div>
+    <div class="admin-content">
+      <div class="admin-panel" style="max-width:700px;">
+        <div class="admin-panel-header">
+          <h5 th:text="${isNew} ? 'Add Staff Member' : 'Edit Staff Member'">Form</h5>
+          <a th:href="@{/admin/team}" class="btn-outline-primary" style="font-size:0.82rem;padding:7px 14px;"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+        <div class="admin-panel-body">
+          <form th:action="@{/admin/team/staff/save}" method="post" data-validate>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="hidden" name="id" th:value="${member.id}"/>
+            <div class="row g-3">
+              <div class="col-md-6"><label class="form-label-custom">First Name *</label><input type="text" name="firstName" class="form-input-custom" th:value="${member.firstName}" required/></div>
+              <div class="col-md-6"><label class="form-label-custom">Last Name *</label><input type="text" name="lastName" class="form-input-custom" th:value="${member.lastName}" required/></div>
+              <div class="col-12"><label class="form-label-custom">Title / Role *</label><input type="text" name="title" class="form-input-custom" th:value="${member.title}" required/></div>
+              <div class="col-md-6"><label class="form-label-custom">Email</label><input type="email" name="email" class="form-input-custom" th:value="${member.email}"/></div>
+              <div class="col-md-6"><label class="form-label-custom">LinkedIn URL</label><input type="url" name="linkedin" class="form-input-custom" th:value="${member.linkedin}"/></div>
+              <div class="col-12"><label class="form-label-custom">Photo URL</label><input type="url" name="imageUrl" class="form-input-custom" th:value="${member.imageUrl}" placeholder="https://..."/></div>
+              <div class="col-md-4"><label class="form-label-custom">Display Order</label><input type="number" name="displayOrder" class="form-input-custom" th:value="${member.displayOrder}" value="1"/></div>
+              <div class="col-md-4"><label class="form-label-custom">Status</label><select name="active" class="form-input-custom"><option value="true" th:selected="${member.active}">Active</option><option value="false" th:selected="${!member.active}">Inactive</option></select></div>
+              <div class="col-12"><label class="form-label-custom">Biography</label><textarea name="bio" class="form-input-custom" rows="4" style="resize:vertical;" th:text="${member.bio}"></textarea></div>
+              <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn-primary-custom"><i class="fas fa-save"></i> Save</button>
+                <a th:href="@{/admin/team}" class="btn-outline-primary">Cancel</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="~{fragments/admin-layout :: adminScripts}"></div>
+</body>
+</html>

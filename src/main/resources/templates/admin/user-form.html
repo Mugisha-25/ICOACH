@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/admin-layout :: adminHead('User Form')}"></head>
+<body>
+<div class="admin-wrapper">
+  <div th:replace="~{fragments/admin-layout :: sidebar('users')}"></div>
+  <div class="admin-main">
+    <div th:replace="~{fragments/admin-layout :: topbar(${isNew} ? 'New User' : 'Edit User')}"></div>
+    <div class="admin-content">
+      <div class="admin-panel" style="max-width:600px;">
+        <div class="admin-panel-header">
+          <h5 th:text="${isNew} ? 'Create New User' : 'Edit User'">User Form</h5>
+          <a th:href="@{/admin/users}" class="btn-outline-primary" style="font-size:0.82rem;padding:7px 14px;"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+        <div class="admin-panel-body">
+          <form th:action="@{/admin/users/save}" method="post" data-validate>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="hidden" name="id" th:value="${user.id}"/>
+            <div class="row g-3">
+              <div class="col-md-6"><label class="form-label-custom">First Name *</label><input type="text" name="firstName" class="form-input-custom" th:value="${user.firstName}" required/></div>
+              <div class="col-md-6"><label class="form-label-custom">Last Name *</label><input type="text" name="lastName" class="form-input-custom" th:value="${user.lastName}" required/></div>
+              <div class="col-12"><label class="form-label-custom">Email *</label><input type="email" name="email" class="form-input-custom" th:value="${user.email}" required/></div>
+              <div class="col-12"><label class="form-label-custom" th:text="${isNew} ? 'Password *' : 'New Password (leave blank to keep current)'">Password</label>
+                <input type="password" name="password" class="form-input-custom" th:required="${isNew}" minlength="8"/></div>
+              <div class="col-12">
+                <label class="form-label-custom">Role *</label>
+                <select name="role" class="form-input-custom" required>
+                  <option th:each="r : ${roles}" th:value="${r}" th:text="${r}" th:selected="${user.role == r}">ROLE</option>
+                </select>
+              </div>
+              <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn-primary-custom"><i class="fas fa-save"></i> Save User</button>
+                <a th:href="@{/admin/users}" class="btn-outline-primary">Cancel</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="~{fragments/admin-layout :: adminScripts}"></div>
+</body>
+</html>

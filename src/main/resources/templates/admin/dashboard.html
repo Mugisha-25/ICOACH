@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/admin-layout :: adminHead('Dashboard')}"></head>
+<body>
+<div class="admin-wrapper">
+  <div th:replace="~{fragments/admin-layout :: sidebar('dashboard')}"></div>
+  <div class="admin-main">
+    <div th:replace="~{fragments/admin-layout :: topbar('Dashboard')}"></div>
+    <div class="admin-content">
+
+      <!-- Stat Cards -->
+      <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-xl-3">
+          <div class="admin-stat-card">
+            <div class="stat-bg-icon"><i class="fas fa-dollar-sign"></i></div>
+            <div class="label">Total Donations</div>
+            <div class="value">$<span th:text="${#numbers.formatDecimal(totalDonations, 1, 'COMMA', 2, 'POINT')}">0.00</span></div>
+            <div class="sub">All-time completed</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="admin-stat-card">
+            <div class="stat-bg-icon"><i class="fas fa-hands-helping"></i></div>
+            <div class="label">Pending Volunteers</div>
+            <div class="value" th:text="${pendingVolunteers}">0</div>
+            <div class="sub">Awaiting review</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="admin-stat-card">
+            <div class="stat-bg-icon"><i class="fas fa-envelope"></i></div>
+            <div class="label">New Messages</div>
+            <div class="value" th:text="${newMessages}">0</div>
+            <div class="sub">Unread contact forms</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+          <div class="admin-stat-card">
+            <div class="stat-bg-icon"><i class="fas fa-th-large"></i></div>
+            <div class="label">Active Programs</div>
+            <div class="value" th:text="${totalPrograms}">0</div>
+            <div class="sub"><span th:text="${totalEvents}">0</span> scheduled events</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Recent Donations -->
+        <div class="col-lg-7">
+          <div class="admin-panel">
+            <div class="admin-panel-header">
+              <h5><i class="fas fa-dollar-sign me-2 text-success"></i> Recent Donations</h5>
+              <a th:href="@{/admin/donations}" style="font-size:0.82rem;color:var(--primary);">View All</a>
+            </div>
+            <div class="admin-panel-body p-0">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Donor</th>
+                    <th>Amount</th>
+                    <th>Purpose</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="d : ${recentDonations}">
+                    <td>
+                      <div style="font-weight:600;font-size:0.85rem;" th:text="${d.donorFullName}">Name</div>
+                      <div style="font-size:0.75rem;color:var(--text-mid);" th:text="${d.donorEmail}">email</div>
+                    </td>
+                    <td style="font-weight:700;color:var(--green);">$<span th:text="${d.amount}">0</span></td>
+                    <td style="font-size:0.82rem;" th:text="${d.purpose}">General</td>
+                    <td>
+                      <span class="badge-status"
+                            th:classappend="${d.status.name() == 'COMPLETED'} ? ' badge-success' : (${d.status.name() == 'PENDING'} ? ' badge-warning' : ' badge-danger')"
+                            th:text="${d.status}">Status</span>
+                    </td>
+                  </tr>
+                  <tr th:if="${#lists.isEmpty(recentDonations)}">
+                    <td colspan="4" style="text-align:center;padding:24px;color:var(--text-mid);">No donations yet.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Messages -->
+        <div class="col-lg-5">
+          <div class="admin-panel h-100">
+            <div class="admin-panel-header">
+              <h5><i class="fas fa-envelope me-2" style="color:var(--primary);"></i> New Messages</h5>
+              <a th:href="@{/admin/contacts}" style="font-size:0.82rem;color:var(--primary);">View All</a>
+            </div>
+            <div class="admin-panel-body p-0">
+              <div th:each="msg : ${recentMessages}" style="padding:14px 20px;border-bottom:1px solid var(--border);">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div style="font-weight:600;font-size:0.85rem;" th:text="${msg.name}">Name</div>
+                  <span class="badge-status badge-info" style="font-size:0.68rem;" th:text="${msg.type}">TYPE</span>
+                </div>
+                <div style="font-size:0.8rem;color:var(--text-mid);margin-top:4px;" th:text="${msg.subject}">Subject</div>
+                <div style="font-size:0.75rem;color:var(--text-light);margin-top:4px;" th:text="${#temporals.format(msg.createdAt,'MMM d, h:mm a')}">Date</div>
+                <a th:href="@{/admin/contacts/{id}(id=${msg.id})}" style="font-size:0.78rem;color:var(--primary);font-weight:600;margin-top:6px;display:inline-block;">Read →</a>
+              </div>
+              <div th:if="${#lists.isEmpty(recentMessages)}" style="padding:24px;text-align:center;color:var(--text-mid);">
+                No new messages.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="col-12">
+          <div class="admin-panel">
+            <div class="admin-panel-header"><h5>Quick Actions</h5></div>
+            <div class="admin-panel-body">
+              <div class="d-flex flex-wrap gap-2">
+                <a th:href="@{/admin/programs/new}" class="btn-primary-custom" style="font-size:0.82rem;padding:9px 16px;"><i class="fas fa-plus"></i> New Program</a>
+                <a th:href="@{/admin/events/new}" class="btn-primary-custom" style="font-size:0.82rem;padding:9px 16px;"><i class="fas fa-plus"></i> New Event</a>
+                <a th:href="@{/admin/news/new}" class="btn-primary-custom" style="font-size:0.82rem;padding:9px 16px;"><i class="fas fa-plus"></i> New Post</a>
+                <a th:href="@{/admin/donations/export/pdf}" class="btn-outline-primary" style="font-size:0.82rem;padding:9px 16px;"><i class="fas fa-file-pdf"></i> Export Donations PDF</a>
+                <a th:href="@{/admin/donations/export/excel}" class="btn-outline-primary" style="font-size:0.82rem;padding:9px 16px;"><i class="fas fa-file-excel"></i> Export Excel</a>
+                <a th:href="@{/admin/volunteers/export/excel}" class="btn-outline-primary" style="font-size:0.82rem;padding:9px 16px;"><i class="fas fa-file-excel"></i> Volunteers Excel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="col-12">
+          <div class="admin-panel">
+            <div class="admin-panel-header"><h5><i class="fas fa-chart-line me-2"></i> Monthly Donation Overview</h5></div>
+            <div class="admin-panel-body">
+              <canvas id="donationChart" height="80"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div th:replace="~{fragments/admin-layout :: adminScripts}"></div>
+<script>
+const ctx = document.getElementById('donationChart');
+if (ctx) {
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      datasets: [{
+        label: 'Donations ($)',
+        data: [800,1200,950,1800,2100,1600,2400,2200,1900,2600,2100,3000],
+        borderColor: 'rgba(27,58,107,1)',
+        backgroundColor: 'rgba(27,58,107,0.08)',
+        borderWidth: 2.5,
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: 'rgba(244,164,27,1)',
+        pointRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+}
+</script>
+</body>
+</html>

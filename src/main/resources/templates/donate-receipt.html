@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Donation Receipt')}"></head>
+<body>
+<nav th:replace="~{fragments/header :: navbar}" class="no-print"></nav>
+<section class="section-pad">
+  <div class="container" style="max-width:640px;">
+    <div class="form-card">
+      <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+          <h2 style="color:var(--primary);">Bridge<span style="color:var(--accent);">Hope</span></h2>
+          <div style="font-size:0.8rem;color:var(--text-mid);">Community Center</div>
+          <div style="font-size:0.8rem;color:var(--text-mid);">123 Community Drive, Des Moines, IA 50309</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:0.75rem;color:var(--text-mid);text-transform:uppercase;letter-spacing:1px;">Official Receipt</div>
+          <div style="font-size:1.2rem;font-weight:800;color:var(--primary);" th:text="${donation.receiptNumber}">BH-001</div>
+        </div>
+      </div>
+      <hr class="divider"/>
+      <div class="row g-3">
+        <div class="col-6">
+          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Donor</div>
+          <div style="font-weight:600;" th:text="${donation.donorFullName}">Name</div>
+          <div style="font-size:0.85rem;color:var(--text-mid);" th:text="${donation.donorEmail}">Email</div>
+        </div>
+        <div class="col-6">
+          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Date</div>
+          <div style="font-weight:600;" th:text="${#temporals.format(donation.createdAt,'MMMM d, yyyy')}">Date</div>
+        </div>
+        <div class="col-6">
+          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Amount</div>
+          <div style="font-size:1.8rem;font-weight:800;color:var(--primary);">$<span th:text="${donation.amount}">100</span></div>
+        </div>
+        <div class="col-6">
+          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Type</div>
+          <div style="font-weight:600;" th:text="${donation.donationType}">ONE_TIME</div>
+        </div>
+        <div class="col-6">
+          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Designation</div>
+          <div th:text="${donation.purpose}">General Support</div>
+        </div>
+        <div class="col-6">
+          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Status</div>
+          <span class="badge-status badge-success" th:text="${donation.status}">COMPLETED</span>
+        </div>
+      </div>
+      <hr class="divider"/>
+      <p style="font-size:0.82rem;color:var(--text-mid);line-height:1.7;">
+        BridgeHope Community Center is a registered 501(c)(3) nonprofit organization. No goods or services were provided in exchange for this contribution. This receipt may be used for tax purposes. Please consult your tax advisor regarding deductibility.
+      </p>
+      <div class="d-flex gap-3 mt-4 no-print flex-wrap">
+        <button id="printReceipt" class="btn-primary-custom" style="font-size:0.85rem;"><i class="fas fa-print me-1"></i> Print Receipt</button>
+        <a th:href="@{/}" class="btn-outline-primary" style="font-size:0.85rem;"><i class="fas fa-home me-1"></i> Back to Home</a>
+      </div>
+    </div>
+  </div>
+</section>
+<div th:replace="~{fragments/footer :: footer}" class="no-print"></div>
+</body>
+</html>
