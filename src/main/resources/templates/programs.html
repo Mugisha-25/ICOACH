@@ -1,59 +1,126 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: head('Programs')}"></head>
+<head th:replace="~{fragments/header :: head('Our Programs')}"></head>
 <body>
 <nav th:replace="~{fragments/header :: navbar}"></nav>
 
 <section class="page-hero">
   <div class="container">
     <h1>Our Programs</h1>
-    <p>Comprehensive services designed to empower every stage of family development</p>
+    <p>Empowering families and individuals through education, workforce development, and community support</p>
     <div class="breadcrumb-custom"><a href="/">Home</a><span>/</span><span>Programs</span></div>
   </div>
 </section>
 
+<!-- Programs List -->
 <section class="section-pad">
-  <div class="container">
-    <div class="row g-2 mb-5 justify-content-between align-items-center fade-up">
-      <div class="col-md-4">
-        <input id="programSearch" type="text" class="form-input-custom" placeholder="&#xf002;  Search programs..." style="font-family:'Font Awesome 6 Free',sans-serif;"/>
-      </div>
-    </div>
-    <div class="row g-4">
-      <div th:each="prog : ${programs}" class="col-md-6 col-lg-4 program-card-wrap fade-up">
-        <div class="program-card h-100 d-flex flex-column">
-          <div class="program-icon">
-            <i th:class="${prog.iconClass ?: 'fas fa-star'}"></i>
-          </div>
-          <h4 th:text="${prog.name}">Program Name</h4>
-          <div class="tag tag-primary mb-2" th:text="${prog.category}">Category</div>
-          <p th:text="${prog.shortDescription}" style="flex:1;">Description</p>
-          <div style="margin:16px 0 0;font-size:0.82rem;color:var(--text-mid);">
-            <div th:if="${prog.targetAudience}"><i class="fas fa-users me-2" style="color:var(--accent);"></i><span th:text="${prog.targetAudience}"></span></div>
-            <div th:if="${prog.schedule}" class="mt-1"><i class="fas fa-clock me-2" style="color:var(--accent);"></i><span th:text="${prog.schedule}"></span></div>
-            <div th:if="${prog.location}" class="mt-1"><i class="fas fa-map-marker-alt me-2" style="color:var(--accent);"></i><span th:text="${prog.location}"></span></div>
-          </div>
-          <div class="mt-4 d-flex gap-2">
-            <a th:href="@{/programs/{slug}(slug=${prog.slug})}" class="btn-primary-custom" style="font-size:0.82rem;padding:9px 18px;flex:1;justify-content:center;">
-              Learn More
-            </a>
-            <a th:href="@{/contact}" class="btn-outline-primary" style="font-size:0.82rem;padding:9px 14px;">
-              <i class="fas fa-info-circle"></i>
-            </a>
-          </div>
+  <div class="container" style="max-width:860px;">
+
+    <div th:each="prog,i : ${programs}" class="fade-up program-card-wrap" th:id="${prog.slug}"
+         style="margin-bottom:60px;">
+
+      <!-- Divider between programs -->
+      <hr th:if="${!i.first}" style="border:none;border-top:1px solid var(--border);margin-bottom:60px;"/>
+
+      <div class="d-flex align-items-center gap-3 mb-4">
+        <div class="program-icon" style="width:52px;height:52px;font-size:1.2rem;flex-shrink:0;">
+          <i th:class="${prog.iconClass ?: 'fas fa-star'}"></i>
         </div>
+        <h2 style="font-size:clamp(1.4rem,2.5vw,1.9rem);color:var(--primary);margin:0;" th:text="${prog.name}">Program Name</h2>
       </div>
+
+      <div style="color:var(--text-mid);line-height:1.9;font-size:1rem;white-space:pre-line;" th:text="${prog.fullDescription}">
+        Program description
+      </div>
+
+      <div class="d-flex gap-3 flex-wrap mt-4" style="font-size:0.82rem;color:var(--text-mid);">
+        <span th:if="${prog.targetAudience}">
+          <i class="fas fa-users me-1" style="color:var(--accent);"></i>
+          <span th:text="${prog.targetAudience}"></span>
+        </span>
+        <span th:if="${prog.schedule}">
+          <i class="fas fa-clock me-1" style="color:var(--accent);"></i>
+          <span th:text="${prog.schedule}"></span>
+        </span>
+        <span th:if="${prog.location}">
+          <i class="fas fa-map-marker-alt me-1" style="color:var(--accent);"></i>
+          <span th:text="${prog.location}"></span>
+        </span>
+      </div>
+
+      <a th:href="@{/programs/{slug}(slug=${prog.slug})}"
+         class="btn-primary-custom mt-4 d-inline-flex" style="font-size:0.88rem;padding:10px 22px;">
+        Read More <i class="fas fa-arrow-right ms-2"></i>
+      </a>
     </div>
+
+    <div th:if="${#lists.isEmpty(programs)}" class="text-center py-5">
+      <i class="fas fa-folder-open fa-3x mb-3 d-block" style="color:var(--text-light);"></i>
+      <p style="color:var(--text-mid);">Programs coming soon. Check back shortly.</p>
+    </div>
+
   </div>
 </section>
 
-<section class="cta-section">
-  <div class="container text-center">
-    <h2>Can't Find What You're Looking For?</h2>
-    <p>Contact us to learn about additional services or to discuss how we can support your specific needs.</p>
-    <div class="d-flex gap-3 justify-content-center flex-wrap mt-4">
-      <a th:href="@{/contact}" class="btn-accent"><i class="fas fa-envelope"></i> Contact Us</a>
-      <a th:href="@{/volunteer}" class="btn-outline-white"><i class="fas fa-hands-helping"></i> Volunteer with Us</a>
+<!-- Contact Section -->
+<section class="section-pad section-alt" id="contact-info">
+  <div class="container" style="max-width:860px;">
+    <hr style="border:none;border-top:2px solid var(--border);margin-bottom:48px;"/>
+
+    <h2 style="color:var(--primary);margin-bottom:32px;">Contact Us</h2>
+    <p style="color:var(--text-mid);margin-bottom:36px;">
+      Thank you for visiting our website. We are grateful for your interest in our mission and community work.
+    </p>
+
+    <div class="row g-4">
+      <!-- Organization Info -->
+      <div class="col-md-4">
+        <h5 style="color:var(--primary);font-size:0.95rem;font-weight:700;margin-bottom:16px;">Organization Information</h5>
+        <div class="d-flex flex-column gap-2" style="font-size:0.9rem;color:var(--text-mid);">
+          <div><strong>Registered Nonprofit:</strong> [Your Registration Number]</div>
+          <div><i class="fas fa-envelope me-2" style="color:var(--accent);"></i>info@icc-iowa.org</div>
+          <div><i class="fas fa-phone me-2" style="color:var(--accent);"></i>(515) 000-0000</div>
+          <div><i class="fas fa-map-marker-alt me-2" style="color:var(--accent);"></i>123 Community Drive, Des Moines, IA 50309</div>
+        </div>
+      </div>
+
+      <!-- Connect -->
+      <div class="col-md-4">
+        <h5 style="color:var(--primary);font-size:0.95rem;font-weight:700;margin-bottom:16px;">Connect With Us</h5>
+        <div class="d-flex flex-column gap-2" style="font-size:0.9rem;">
+          <a href="#" style="color:var(--text-mid);display:flex;align-items:center;gap:10px;transition:color 0.2s;">
+            <i class="fab fa-facebook-f" style="width:18px;color:var(--primary);"></i> Facebook
+          </a>
+          <a href="#" style="color:var(--text-mid);display:flex;align-items:center;gap:10px;transition:color 0.2s;">
+            <i class="fab fa-youtube" style="width:18px;color:var(--primary);"></i> YouTube
+          </a>
+          <a href="#" style="color:var(--text-mid);display:flex;align-items:center;gap:10px;transition:color 0.2s;">
+            <i class="fab fa-linkedin-in" style="width:18px;color:var(--primary);"></i> LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- Links & Newsletter -->
+      <div class="col-md-4">
+        <h5 style="color:var(--primary);font-size:0.95rem;font-weight:700;margin-bottom:16px;">Important Links</h5>
+        <div class="d-flex flex-column gap-2" style="font-size:0.9rem;margin-bottom:24px;">
+          <a href="#" style="color:var(--text-mid);">Terms &amp; Conditions</a>
+          <a href="#" style="color:var(--text-mid);">Privacy Policy</a>
+          <a href="#" style="color:var(--text-mid);">Refund Policy</a>
+        </div>
+
+        <h5 style="color:var(--primary);font-size:0.95rem;font-weight:700;margin-bottom:10px;">Newsletter</h5>
+        <p style="font-size:0.85rem;color:var(--text-mid);margin-bottom:14px;">
+          Sign up for our newsletter to receive updates about our programs, events, community impact, and opportunities to get involved.
+        </p>
+        <a th:href="@{/#newsletter}" class="btn-accent" style="font-size:0.85rem;padding:9px 20px;">
+          Subscribe Now
+        </a>
+      </div>
+    </div>
+
+    <div style="border-top:1px solid var(--border);margin-top:48px;padding-top:20px;font-size:0.82rem;color:var(--text-light);">
+      &copy; 2026 Iowa Community Center. All rights reserved.
     </div>
   </div>
 </section>
