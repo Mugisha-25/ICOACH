@@ -1164,3 +1164,13 @@ img { max-width: 100%; height: auto; }
   box-shadow: var(--shadow);
 }
 [data-theme="dark"] .news-newsletter-cta { background: var(--dm-surface); border-color: var(--dm-border); }
+
+/* ===== EVENTS PAGE ===== */
+.events-contact-strip {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  box-shadow: var(--shadow);
+}
+[data-theme="dark"] .events-contact-strip { background: var(--dm-surface); border-color: var(--dm-border); }
