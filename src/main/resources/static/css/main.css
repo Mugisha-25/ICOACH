@@ -1154,3 +1154,13 @@ img { max-width: 100%; height: auto; }
   display: flex; align-items: center; justify-content: center;
   color: var(--primary); font-size: 0.88rem;
 }
+
+/* ===== NEWS PAGE ===== */
+.news-newsletter-cta {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  box-shadow: var(--shadow);
+}
+[data-theme="dark"] .news-newsletter-cta { background: var(--dm-surface); border-color: var(--dm-border); }

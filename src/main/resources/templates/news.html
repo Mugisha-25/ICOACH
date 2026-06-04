@@ -3,69 +3,126 @@
 <head th:replace="~{fragments/header :: head('News')}"></head>
 <body>
 <nav th:replace="~{fragments/header :: navbar}"></nav>
+
 <section class="page-hero">
   <div class="container">
     <h1>News &amp; Updates</h1>
-    <p>Stories of impact, program highlights, and community announcements</p>
+    <p>Stories of impact, program highlights, and community announcements from Iowa Community Center</p>
     <div class="breadcrumb-custom"><a href="/">Home</a><span>/</span><span>News</span></div>
   </div>
 </section>
+
 <section class="section-pad">
   <div class="container">
+
+    <!-- Featured Story -->
     <div th:if="${not #lists.isEmpty(featured)}" class="mb-5 fade-up">
       <div class="overline mb-3">Featured Story</div>
       <div th:each="post : ${featured}" th:if="${postStat.first}" class="card" style="overflow:hidden;">
         <div class="row g-0">
           <div class="col-md-5">
-            <div style="height:280px;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;">
-              <img th:if="${post.imageUrl}" th:src="${post.imageUrl}" th:alt="${post.title}" style="width:100%;height:100%;object-fit:cover;"/>
-              <i th:unless="${post.imageUrl}" class="fas fa-newspaper" style="font-size:4rem;color:rgba(255,255,255,0.3);"></i>
+            <div style="height:300px;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;">
+              <img th:if="${post.imageUrl}" th:src="${post.imageUrl}" th:alt="${post.title}"
+                   style="width:100%;height:100%;object-fit:cover;"/>
+              <i th:unless="${post.imageUrl}" class="fas fa-newspaper"
+                 style="font-size:4rem;color:rgba(255,255,255,0.25);"></i>
             </div>
           </div>
           <div class="col-md-7 p-4 d-flex flex-column justify-content-center">
             <span class="news-category" th:text="${post.category ?: 'Featured'}">Category</span>
-            <h3 class="mt-2"><a th:href="@{/news/{slug}(slug=${post.slug})}" th:text="${post.title}" style="color:var(--text-dark);">Title</a></h3>
+            <h3 class="mt-2">
+              <a th:href="@{/news/{slug}(slug=${post.slug})}" th:text="${post.title}"
+                 style="color:var(--text-dark);">Title</a>
+            </h3>
             <p class="mt-2" style="color:var(--text-mid);" th:text="${post.summary}">Summary</p>
-            <div class="news-meta">
-              <span th:text="${post.author}">Author</span>
-              <span th:text="${#temporals.format(post.publishedAt,'MMM d, yyyy')}">Date</span>
+            <div class="news-meta mt-2">
+              <span><i class="fas fa-user me-1"></i><span th:text="${post.author}">Author</span></span>
+              <span><i class="fas fa-calendar me-1"></i>
+                <span th:text="${post.publishedAt != null ? #temporals.format(post.publishedAt,'MMM d, yyyy') : ''}">Date</span>
+              </span>
             </div>
-            <a th:href="@{/news/{slug}(slug=${post.slug})}" class="btn-primary-custom mt-3" style="font-size:0.85rem;align-self:flex-start;">
+            <a th:href="@{/news/{slug}(slug=${post.slug})}" class="btn-primary-custom mt-3"
+               style="font-size:0.85rem;align-self:flex-start;">
               Read Full Story <i class="fas fa-arrow-right ms-1"></i>
             </a>
           </div>
         </div>
       </div>
     </div>
-    <div class="section-header fade-up" style="text-align:left;margin-bottom:32px;">
-      <div class="overline">Latest</div>
-      <h2>All Stories</h2>
+
+    <!-- All Stories -->
+    <div class="d-flex align-items-center justify-content-between mb-4 fade-up">
+      <div>
+        <div class="overline">Latest</div>
+        <h2 style="margin:0;">All Stories</h2>
+      </div>
+      <div style="font-size:0.82rem;color:var(--text-mid);">
+        <i class="fas fa-building me-1" style="color:var(--accent);"></i>
+        Iowa Community Center &mdash; Des Moines, IA
+      </div>
     </div>
+
     <div class="row g-4">
       <div th:each="post : ${posts}" class="col-md-6 col-lg-4 fade-up">
         <div class="news-card h-100">
           <div class="news-card-img">
             <img th:if="${post.imageUrl}" th:src="${post.imageUrl}" th:alt="${post.title}"/>
-            <i th:unless="${post.imageUrl}" class="fas fa-newspaper"></i>
+            <div th:unless="${post.imageUrl}" class="news-img-placeholder">
+              <i class="fas fa-newspaper"></i>
+            </div>
           </div>
           <div class="news-card-body d-flex flex-column h-100">
             <span class="news-category" th:text="${post.category ?: 'News'}">Category</span>
-            <h5><a th:href="@{/news/{slug}(slug=${post.slug})}" th:text="${post.title}">Title</a></h5>
-            <p th:text="${post.summary}" style="flex:1;">Summary</p>
+            <h5 class="flex-grow-1">
+              <a th:href="@{/news/{slug}(slug=${post.slug})}" th:text="${post.title}">Title</a>
+            </h5>
+            <p th:text="${#strings.abbreviate(post.summary, 120)}" style="flex:1;">Summary</p>
             <div class="news-meta">
-              <span th:text="${post.author}">Author</span>
-              <span th:text="${#temporals.format(post.publishedAt,'MMM d, yyyy')}">Date</span>
+              <span><i class="fas fa-user me-1"></i><span th:text="${post.author}">Author</span></span>
+              <span><i class="fas fa-calendar me-1"></i>
+                <span th:text="${post.publishedAt != null ? #temporals.format(post.publishedAt,'MMM d, yyyy') : ''}">Date</span>
+              </span>
             </div>
           </div>
         </div>
       </div>
+
       <div th:if="${#lists.isEmpty(posts)}" class="col-12 text-center py-5">
         <i class="fas fa-newspaper fa-3x mb-3 d-block" style="color:var(--text-light);"></i>
         <p style="color:var(--text-mid);">No news posts published yet. Check back soon!</p>
+        <p style="color:var(--text-light);font-size:0.85rem;margin-top:8px;">
+          <i class="fas fa-envelope me-1"></i>
+          Stay updated: <a href="mailto:info@icoachiowa.org" style="color:var(--primary);">info@icoachiowa.org</a>
+        </p>
       </div>
     </div>
+
+    <!-- Newsletter CTA -->
+    <div class="news-newsletter-cta fade-up mt-5">
+      <div class="row align-items-center g-3">
+        <div class="col-md-7">
+          <h5 style="margin:0;color:var(--primary);">
+            <i class="fas fa-bell me-2" style="color:var(--accent);"></i>
+            Stay Connected with Iowa Community Center
+          </h5>
+          <p style="margin:6px 0 0;font-size:0.88rem;color:var(--text-mid);">
+            Sign up for our newsletter to receive updates about programs, events, and community impact.
+          </p>
+        </div>
+        <div class="col-md-5 d-flex gap-2">
+          <a th:href="@{/#newsletter}" class="btn-primary-custom" style="font-size:0.85rem;padding:10px 20px;flex:1;justify-content:center;">
+            <i class="fas fa-envelope me-1"></i> Subscribe
+          </a>
+          <a th:href="@{/contact}" class="btn-outline-primary" style="font-size:0.85rem;padding:10px 18px;">
+            <i class="fas fa-phone"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
+
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>
