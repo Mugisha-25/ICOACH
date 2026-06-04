@@ -38,7 +38,7 @@ public class ExportService {
         com.lowagie.text.Font headerFont = new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, 10, com.lowagie.text.Font.BOLD, Color.WHITE);
         com.lowagie.text.Font cellFont = new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, 9);
 
-        Paragraph title = new Paragraph("BridgeHope Community Center - Donation Report", titleFont);
+        Paragraph title = new Paragraph("Iowa Community Center - Donation Report", titleFont);
         title.setAlignment(Element.ALIGN_CENTER);
         doc.add(title);
         doc.add(new Paragraph(" "));

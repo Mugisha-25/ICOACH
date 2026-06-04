@@ -55,7 +55,7 @@ public class Donation {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         if (receiptNumber == null) {
-            receiptNumber = "BH-" + System.currentTimeMillis();
+            receiptNumber = "ICC-" + System.currentTimeMillis();
         }
     }
 

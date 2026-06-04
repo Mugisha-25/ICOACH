@@ -8,13 +8,13 @@
     <div class="form-card">
       <div class="d-flex justify-content-between align-items-start mb-4">
         <div>
-          <h2 style="color:var(--primary);">Bridge<span style="color:var(--accent);">Hope</span></h2>
+          <h2 style="color:var(--primary);"><span style="color:var(--accent);">ICC</span></h2>
           <div style="font-size:0.8rem;color:var(--text-mid);">Community Center</div>
           <div style="font-size:0.8rem;color:var(--text-mid);">123 Community Drive, Des Moines, IA 50309</div>
         </div>
         <div style="text-align:right;">
           <div style="font-size:0.75rem;color:var(--text-mid);text-transform:uppercase;letter-spacing:1px;">Official Receipt</div>
-          <div style="font-size:1.2rem;font-weight:800;color:var(--primary);" th:text="${donation.receiptNumber}">BH-001</div>
+          <div style="font-size:1.2rem;font-weight:800;color:var(--primary);" th:text="${donation.receiptNumber}">ICC-001</div>
         </div>
       </div>
       <hr class="divider"/>
@@ -47,7 +47,7 @@
       </div>
       <hr class="divider"/>
       <p style="font-size:0.82rem;color:var(--text-mid);line-height:1.7;">
-        BridgeHope Community Center is a registered 501(c)(3) nonprofit organization. No goods or services were provided in exchange for this contribution. This receipt may be used for tax purposes. Please consult your tax advisor regarding deductibility.
+        Iowa Community Center is a registered 501(c)(3) nonprofit organization. No goods or services were provided in exchange for this contribution. This receipt may be used for tax purposes. Please consult your tax advisor regarding deductibility.
       </p>
       <div class="d-flex gap-3 mt-4 no-print flex-wrap">
         <button id="printReceipt" class="btn-primary-custom" style="font-size:0.85rem;"><i class="fas fa-print me-1"></i> Print Receipt</button>

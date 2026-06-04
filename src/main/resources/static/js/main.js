@@ -1,4 +1,4 @@
-/* ===== BridgeHope Community Center — Main JavaScript ===== */
+/* ===== Iowa Community Center — Main JavaScript ===== */
 
 // ===== Dark Mode =====
 const darkToggle = document.getElementById('darkModeToggle');

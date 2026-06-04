@@ -15,7 +15,7 @@
     </p>
     <div class="form-card" style="max-width:440px;margin:0 auto 32px;">
       <div style="font-size:0.85rem;color:var(--text-mid);margin-bottom:6px;">Your Receipt Number</div>
-      <div style="font-size:1.5rem;font-weight:800;color:var(--primary);" th:text="${receiptNumber}">BH-...</div>
+      <div style="font-size:1.5rem;font-weight:800;color:var(--primary);" th:text="${receiptNumber}">ICC-...</div>
       <div style="font-size:0.8rem;color:var(--text-mid);margin-top:8px;">Save this number for your records. A receipt has been generated.</div>
       <a th:if="${receiptNumber}" th:href="@{/donate/receipt/{r}(r=${receiptNumber})}"
          class="btn-outline-primary mt-3 w-100 justify-content-center" style="font-size:0.85rem;">

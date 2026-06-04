@@ -35,15 +35,15 @@ public class DataInitService implements CommandLineRunner {
     }
 
     private void seedUsers() {
-        if (!userService.existsByEmail("admin@bridgehope.org")) {
-            userService.register("Super", "Admin", "admin@bridgehope.org", "Admin@2024!", Role.SUPER_ADMIN);
-            log.info("Created super admin: admin@bridgehope.org / Admin@2024!");
+        if (!userService.existsByEmail("admin@icc-iowa.org")) {
+            userService.register("Super", "Admin", "admin@icc-iowa.org", "Admin@2024!", Role.SUPER_ADMIN);
+            log.info("Created super admin: admin@icc-iowa.org / Admin@2024!");
         }
-        if (!userService.existsByEmail("finance@bridgehope.org")) {
-            userService.register("Finance", "Manager", "finance@bridgehope.org", "Finance@2024!", Role.FINANCE);
+        if (!userService.existsByEmail("finance@icc-iowa.org")) {
+            userService.register("Finance", "Manager", "finance@icc-iowa.org", "Finance@2024!", Role.FINANCE);
         }
-        if (!userService.existsByEmail("comms@bridgehope.org")) {
-            userService.register("Communications", "Lead", "comms@bridgehope.org", "Comms@2024!", Role.COMMUNICATIONS);
+        if (!userService.existsByEmail("comms@icc-iowa.org")) {
+            userService.register("Communications", "Lead", "comms@icc-iowa.org", "Comms@2024!", Role.COMMUNICATIONS);
         }
     }
 
@@ -119,7 +119,7 @@ public class DataInitService implements CommandLineRunner {
                 .title("Family Literacy & Resource Fair")
                 .summary("Free event connecting families with educational resources, community services, and literacy materials.")
                 .description("Bring the whole family! This free resource fair features hands-on literacy activities, access to community service providers, free books, health screenings, and more. All materials available in multiple languages.")
-                .location("BridgeHope Community Center, 123 Community Drive")
+                .location("Iowa Community Center, 123 Community Drive")
                 .startDate(now.plusDays(14).withHour(10).withMinute(0))
                 .endDate(now.plusDays(14).withHour(15).withMinute(0))
                 .category("Community")
@@ -132,7 +132,7 @@ public class DataInitService implements CommandLineRunner {
                 .title("Volunteer Orientation & Training")
                 .summary("New volunteer orientation covering our mission, programs, and how you can make a difference.")
                 .description("Are you ready to make a difference? Join us for this comprehensive orientation where you'll learn about our programs, meet staff, and discover how your unique skills can support our community. Light refreshments provided.")
-                .location("BridgeHope Community Center, Conference Room A")
+                .location("Iowa Community Center, Conference Room A")
                 .startDate(now.plusDays(7).withHour(9).withMinute(0))
                 .endDate(now.plusDays(7).withHour(12).withMinute(0))
                 .category("Volunteer")
@@ -152,7 +152,7 @@ public class DataInitService implements CommandLineRunner {
 
         String[][] staff = {
             {"Maria", "Okonkwo", "Executive Director",
-             "Maria brings over 15 years of nonprofit leadership experience and a deep personal connection to the communities we serve. Under her leadership, BridgeHope has expanded programs serving thousands of families annually.",
+             "Maria brings over 15 years of nonprofit leadership experience and a deep personal connection to the communities we serve. Under her leadership, ICC has expanded programs serving thousands of families annually.",
              "1"},
             {"James", "Ndukwe", "Director of Programs",
              "James oversees all educational and community programs, ensuring each initiative is grounded in evidence-based practices and responsive to community needs.",
