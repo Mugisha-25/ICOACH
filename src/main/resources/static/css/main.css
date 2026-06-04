@@ -1125,3 +1125,24 @@ img { max-width: 100%; height: auto; }
 .quick-contact-card span { font-size: 0.82rem; font-weight: 700; color: var(--text-dark); }
 .quick-contact-card small { font-size: 0.72rem; color: var(--text-mid); }
 [data-theme="dark"] .quick-contact-card span { color: var(--dm-text); }
+
+/* ===== DONATE PAGE ===== */
+.donate-amount-pill {
+  width: 56px; height: 56px; flex-shrink: 0;
+  background: rgba(244,164,27,0.12);
+  border: 1.5px solid rgba(244,164,27,0.3);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.9rem; color: var(--accent);
+}
+.donate-trust-card {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: var(--radius); padding: 28px; color: #fff;
+}
+.donate-trust-card h5 { color: #fff; margin-bottom: 10px; }
+.donate-trust-card p  { color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.7; margin: 0; }
+.donate-trust-badges {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  margin-top: 16px; font-size: 0.8rem; color: rgba(255,255,255,0.85);
+}
+.donate-trust-badges span { display: flex; align-items: center; gap: 6px; }
