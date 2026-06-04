@@ -1146,3 +1146,11 @@ img { max-width: 100%; height: auto; }
   margin-top: 16px; font-size: 0.8rem; color: rgba(255,255,255,0.85);
 }
 .donate-trust-badges span { display: flex; align-items: center; gap: 6px; }
+
+/* ===== VOLUNTEER PAGE ===== */
+.vol-icon {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: rgba(27,58,107,0.1); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--primary); font-size: 0.88rem;
+}

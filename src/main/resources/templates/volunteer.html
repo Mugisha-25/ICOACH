@@ -3,6 +3,7 @@
 <head th:replace="~{fragments/header :: head('Volunteer')}"></head>
 <body>
 <nav th:replace="~{fragments/header :: navbar}"></nav>
+
 <section class="page-hero">
   <div class="container">
     <h1>Volunteer With Us</h1>
@@ -10,61 +11,114 @@
     <div class="breadcrumb-custom"><a href="/">Home</a><span>/</span><span>Volunteer</span></div>
   </div>
 </section>
-<!-- Why Volunteer -->
+
 <section class="section-pad">
   <div class="container">
+
+    <!-- Success message -->
     <div th:if="${param.applied}" class="alert-custom alert-success-custom mb-5 fade-up">
-      <i class="fas fa-check-circle me-2"></i> Thank you for applying! We'll review your application and contact you within 3–5 business days.
+      <i class="fas fa-check-circle me-2"></i>
+      Thank you for applying! We will review your application and contact you within 3–5 business days.
     </div>
+
     <div class="row g-5">
+
+      <!-- Left: Why Volunteer + Contact -->
       <div class="col-lg-4 fade-left">
         <div class="overline">Make an Impact</div>
         <h3 style="color:var(--primary);">Why Volunteer?</h3>
-        <p style="color:var(--text-mid);margin-top:12px;">Our volunteers are the heart of ICC. Whether you tutor students, assist with job coaching, or help organize events — your contribution changes lives.</p>
+        <p style="color:var(--text-mid);margin-top:12px;line-height:1.8;">
+          Our volunteers are the heart of Iowa Community Center. Whether you tutor students,
+          assist with job coaching, help with driving practice, or support community events —
+          your contribution changes lives.
+        </p>
+        <p style="color:var(--text-mid);font-size:0.88rem;line-height:1.8;">
+          In 2025, our <strong>43 volunteers</strong> contributed over <strong>1,255 hours</strong>
+          of service to our community programs.
+        </p>
+
+        <!-- Volunteer areas -->
         <div class="d-flex flex-column gap-3 mt-4">
-          <div class="d-flex gap-3 align-items-start">
-            <div style="width:36px;height:36px;background:rgba(27,58,107,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-graduation-cap" style="color:var(--primary);font-size:0.9rem;"></i></div>
+          <div class="d-flex gap-3 align-items-center">
+            <div class="vol-icon"><i class="fas fa-graduation-cap"></i></div>
             <div style="font-size:0.88rem;color:var(--text-mid);">Tutoring &amp; Academic Support</div>
           </div>
-          <div class="d-flex gap-3 align-items-start">
-            <div style="width:36px;height:36px;background:rgba(27,58,107,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-briefcase" style="color:var(--primary);font-size:0.9rem;"></i></div>
+          <div class="d-flex gap-3 align-items-center">
+            <div class="vol-icon"><i class="fas fa-briefcase"></i></div>
             <div style="font-size:0.88rem;color:var(--text-mid);">Career Coaching &amp; Job Readiness</div>
           </div>
-          <div class="d-flex gap-3 align-items-start">
-            <div style="width:36px;height:36px;background:rgba(27,58,107,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-language" style="color:var(--primary);font-size:0.9rem;"></i></div>
-            <div style="font-size:0.88rem;color:var(--text-mid);">Language &amp; Translation Support</div>
+          <div class="d-flex gap-3 align-items-center">
+            <div class="vol-icon"><i class="fas fa-language"></i></div>
+            <div style="font-size:0.88rem;color:var(--text-mid);">Language &amp; Interpretation Support</div>
           </div>
-          <div class="d-flex gap-3 align-items-start">
-            <div style="width:36px;height:36px;background:rgba(27,58,107,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-calendar" style="color:var(--primary);font-size:0.9rem;"></i></div>
+          <div class="d-flex gap-3 align-items-center">
+            <div class="vol-icon"><i class="fas fa-car"></i></div>
+            <div style="font-size:0.88rem;color:var(--text-mid);">Driving Practice &amp; Transportation</div>
+          </div>
+          <div class="d-flex gap-3 align-items-center">
+            <div class="vol-icon"><i class="fas fa-child"></i></div>
+            <div style="font-size:0.88rem;color:var(--text-mid);">Early Childhood &amp; Youth Programs</div>
+          </div>
+          <div class="d-flex gap-3 align-items-center">
+            <div class="vol-icon"><i class="fas fa-calendar"></i></div>
             <div style="font-size:0.88rem;color:var(--text-mid);">Event Planning &amp; Coordination</div>
           </div>
-          <div class="d-flex gap-3 align-items-start">
-            <div style="width:36px;height:36px;background:rgba(27,58,107,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-car" style="color:var(--primary);font-size:0.9rem;"></i></div>
-            <div style="font-size:0.88rem;color:var(--text-mid);">Driving Instruction &amp; Transportation</div>
+        </div>
+
+        <!-- Contact info -->
+        <div class="form-card mt-5" style="background:var(--bg-light);">
+          <div style="font-weight:700;font-size:0.88rem;margin-bottom:14px;color:var(--primary);">
+            <i class="fas fa-info-circle me-2"></i>Questions? Contact Us
+          </div>
+          <div class="d-flex flex-column gap-2" style="font-size:0.85rem;color:var(--text-mid);">
+            <div>
+              <i class="fas fa-envelope me-2" style="color:var(--accent);"></i>
+              <a href="mailto:info@icoachiowa.org" style="color:var(--text-mid);">info@icoachiowa.org</a>
+            </div>
+            <div>
+              <i class="fas fa-phone me-2" style="color:var(--accent);"></i>
+              <a href="tel:5155059109" style="color:var(--text-mid);">515-505-9109</a>
+            </div>
+            <div>
+              <i class="fas fa-map-marker-alt me-2" style="color:var(--accent);"></i>
+              4300 Beaver Avenue<br>
+              <span style="padding-left:22px;">Des Moines, IA 50310</span>
+            </div>
+            <div>
+              <i class="fas fa-clock me-2" style="color:var(--accent);"></i>
+              Mon–Fri, 8:00 AM – 6:00 PM
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- Right: Application Form -->
       <div class="col-lg-8 fade-right">
         <div class="form-card">
-          <h4 style="color:var(--primary);margin-bottom:20px;">Volunteer Application</h4>
+          <h4 style="color:var(--primary);margin-bottom:6px;">Volunteer Application</h4>
+          <p style="color:var(--text-mid);font-size:0.88rem;margin-bottom:24px;">
+            Complete the form below and our volunteer coordinator will be in touch shortly.
+            Iowa Community Center &mdash; 4300 Beaver Avenue, Des Moines, IA 50310
+          </p>
+
           <form th:action="@{/volunteer/apply}" method="post" data-validate>
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
             <div class="row g-3">
               <div class="col-md-6">
                 <label class="form-label-custom">First Name *</label>
-                <input type="text" name="firstName" class="form-input-custom" required/>
+                <input type="text" name="firstName" class="form-input-custom" placeholder="First name" required/>
               </div>
               <div class="col-md-6">
                 <label class="form-label-custom">Last Name *</label>
-                <input type="text" name="lastName" class="form-input-custom" required/>
+                <input type="text" name="lastName" class="form-input-custom" placeholder="Last name" required/>
               </div>
               <div class="col-md-6">
                 <label class="form-label-custom">Email Address *</label>
-                <input type="email" name="email" class="form-input-custom" required/>
+                <input type="email" name="email" class="form-input-custom" placeholder="you@example.com" required/>
               </div>
               <div class="col-md-6">
                 <label class="form-label-custom">Phone Number *</label>
-                <input type="tel" name="phone" class="form-input-custom" required/>
+                <input type="tel" name="phone" class="form-input-custom" placeholder="515-000-0000" required/>
               </div>
               <div class="col-md-8">
                 <label class="form-label-custom">Street Address</label>
@@ -72,50 +126,64 @@
               </div>
               <div class="col-md-4">
                 <label class="form-label-custom">City</label>
-                <input type="text" name="city" class="form-input-custom" value="Des Moines"/>
+                <input type="text" name="city" class="form-input-custom" placeholder="Des Moines"/>
               </div>
               <div class="col-12">
                 <label class="form-label-custom">Skills &amp; Expertise *</label>
-                <textarea name="skills" class="form-input-custom" rows="2" placeholder="e.g., tutoring, ESL, IT, driving instruction, event planning..." required style="resize:vertical;"></textarea>
+                <textarea name="skills" class="form-input-custom" rows="2"
+                          placeholder="e.g., tutoring, ESL, driving instruction, event planning, translation..."
+                          required style="resize:vertical;"></textarea>
               </div>
               <div class="col-12">
                 <label class="form-label-custom">Areas of Interest *</label>
-                <textarea name="interests" class="form-input-custom" rows="2" placeholder="Which programs or activities would you like to support?" required style="resize:vertical;"></textarea>
+                <textarea name="interests" class="form-input-custom" rows="2"
+                          placeholder="Which programs would you like to support? (After-School, Driving Practice, Early Childhood...)"
+                          required style="resize:vertical;"></textarea>
               </div>
               <div class="col-12">
                 <label class="form-label-custom">Availability *</label>
-                <textarea name="availability" class="form-input-custom" rows="2" placeholder="e.g., Weekday evenings, Saturday mornings, flexible..." required style="resize:vertical;"></textarea>
+                <textarea name="availability" class="form-input-custom" rows="2"
+                          placeholder="e.g., Weekday evenings, Saturday mornings, flexible..."
+                          required style="resize:vertical;"></textarea>
               </div>
               <div class="col-12">
-                <label class="form-label-custom">Why Do You Want to Volunteer? *</label>
-                <textarea name="motivation" class="form-input-custom" rows="3" placeholder="Tell us what motivates you to volunteer with ICC..." required style="resize:vertical;"></textarea>
+                <label class="form-label-custom">Why Do You Want to Volunteer with Iowa Community Center? *</label>
+                <textarea name="motivation" class="form-input-custom" rows="3"
+                          placeholder="Tell us what motivates you to serve our community..."
+                          required style="resize:vertical;"></textarea>
               </div>
               <div class="col-md-6">
                 <label class="form-label-custom">Emergency Contact Name</label>
-                <input type="text" name="emergencyContactName" class="form-input-custom"/>
+                <input type="text" name="emergencyContactName" class="form-input-custom" placeholder="Full name"/>
               </div>
               <div class="col-md-6">
                 <label class="form-label-custom">Emergency Contact Phone</label>
-                <input type="tel" name="emergencyContactPhone" class="form-input-custom"/>
+                <input type="tel" name="emergencyContactPhone" class="form-input-custom" placeholder="515-000-0000"/>
               </div>
               <div class="col-12">
                 <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:0.88rem;color:var(--text-mid);">
-                  <input type="checkbox" name="backgroundCheckConsent" value="true" style="width:16px;height:16px;margin-top:2px;" required/>
+                  <input type="checkbox" name="backgroundCheckConsent" value="true"
+                         style="width:16px;height:16px;margin-top:2px;" required/>
                   I consent to a background check as required for working with youth and vulnerable populations.
                 </label>
               </div>
               <div class="col-12">
                 <button type="submit" class="btn-accent" style="font-size:0.95rem;padding:12px 28px;">
-                  <i class="fas fa-paper-plane"></i> Submit Application
+                  <i class="fas fa-paper-plane me-2"></i>Submit Application
                 </button>
+                <p style="font-size:0.75rem;color:var(--text-mid);margin-top:10px;">
+                  By submitting, you agree to be contacted by Iowa Community Center regarding your volunteer application.
+                </p>
               </div>
             </div>
           </form>
         </div>
       </div>
+
     </div>
   </div>
 </section>
+
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>
