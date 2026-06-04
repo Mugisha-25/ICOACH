@@ -1091,3 +1091,37 @@ img { max-width: 100%; height: auto; }
   .ecn-date { flex-direction: row; gap: 8px; padding: 14px 16px; min-width: auto; }
   .ecn-day { font-size: 1.8rem; }
 }
+
+/* ===== CONTACT PAGE ===== */
+.contact-info-icon {
+  width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; color: #fff;
+}
+.contact-social-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--primary); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.88rem; transition: all 0.3s; text-decoration: none;
+}
+.contact-social-btn:hover { background: var(--accent); color: #fff; transform: translateY(-2px); }
+.contact-tab-btn {
+  padding: 8px 18px; border-radius: 6px; border: 1.5px solid var(--border);
+  background: var(--bg-white); color: var(--text-mid); font-size: 0.82rem;
+  font-weight: 600; cursor: pointer; transition: all 0.25s;
+}
+.contact-tab-btn:hover { border-color: var(--primary); color: var(--primary); }
+.contact-tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+[data-theme="dark"] .contact-tab-btn { background: var(--dm-surface); border-color: var(--dm-border); color: var(--dm-text-mid); }
+[data-theme="dark"] .contact-tab-btn.active { background: var(--primary); color: #fff; }
+.quick-contact-card {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  text-align: center; padding: 18px 12px;
+  background: var(--bg-white); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); text-decoration: none;
+  transition: all 0.3s;
+}
+.quick-contact-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: var(--shadow); }
+.quick-contact-card i { font-size: 1.3rem; color: var(--primary); }
+.quick-contact-card span { font-size: 0.82rem; font-weight: 700; color: var(--text-dark); }
+.quick-contact-card small { font-size: 0.72rem; color: var(--text-mid); }
+[data-theme="dark"] .quick-contact-card span { color: var(--dm-text); }
