@@ -3,59 +3,125 @@
 <head th:replace="~{fragments/header :: head('Donation Receipt')}"></head>
 <body>
 <nav th:replace="~{fragments/header :: navbar}" class="no-print"></nav>
+
 <section class="section-pad">
-  <div class="container" style="max-width:640px;">
+  <div class="container" style="max-width:680px;">
     <div class="form-card">
+
+      <!-- Receipt Header -->
       <div class="d-flex justify-content-between align-items-start mb-4">
         <div>
-          <h2 style="color:var(--primary);"><span style="color:var(--accent);">ICC</span></h2>
-          <div style="font-size:0.8rem;color:var(--text-mid);">Community Center</div>
-          <div style="font-size:0.8rem;color:var(--text-mid);">4300 Beaver Avenue, Des Moines, IA 50310</div>
+          <h2 style="color:var(--primary);font-size:1.6rem;font-weight:800;margin-bottom:4px;">
+            Iowa Community <span style="color:var(--accent);">Center</span>
+          </h2>
+          <div style="font-size:0.8rem;color:var(--text-mid);">
+            <i class="fas fa-map-marker-alt me-1" style="color:var(--accent);"></i>
+            4300 Beaver Avenue, Des Moines, IA 50310
+          </div>
+          <div style="font-size:0.8rem;color:var(--text-mid);margin-top:3px;">
+            <i class="fas fa-phone me-1" style="color:var(--accent);"></i>
+            515-505-9109 &nbsp;&bull;&nbsp;
+            <i class="fas fa-envelope me-1" style="color:var(--accent);"></i>
+            info@icoachiowa.org
+          </div>
+          <div style="font-size:0.78rem;color:var(--text-light);margin-top:3px;">
+            <i class="fas fa-certificate me-1" style="color:var(--accent);"></i>
+            EIN / Registered Charity: 82-4386292
+          </div>
         </div>
         <div style="text-align:right;">
-          <div style="font-size:0.75rem;color:var(--text-mid);text-transform:uppercase;letter-spacing:1px;">Official Receipt</div>
-          <div style="font-size:1.2rem;font-weight:800;color:var(--primary);" th:text="${donation.receiptNumber}">ICC-001</div>
+          <div style="font-size:0.7rem;color:var(--text-light);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;">
+            Official Donation Receipt
+          </div>
+          <div style="font-size:1.3rem;font-weight:800;color:var(--primary);"
+               th:text="${donation.receiptNumber}">ICC-001</div>
+          <div style="font-size:0.75rem;color:var(--text-light);margin-top:4px;">
+            <i class="fas fa-check-circle me-1" style="color:var(--green);"></i>
+            <span th:text="${donation.status}">COMPLETED</span>
+          </div>
         </div>
       </div>
+
       <hr class="divider"/>
+
+      <!-- Donation Details -->
       <div class="row g-3">
-        <div class="col-6">
-          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Donor</div>
-          <div style="font-weight:600;" th:text="${donation.donorFullName}">Name</div>
-          <div style="font-size:0.85rem;color:var(--text-mid);" th:text="${donation.donorEmail}">Email</div>
+        <div class="col-sm-6">
+          <div class="receipt-label">Donor Name</div>
+          <div class="receipt-value" th:text="${donation.donorFullName}">Name</div>
+          <div style="font-size:0.82rem;color:var(--text-mid);margin-top:2px;"
+               th:text="${donation.donorEmail}">Email</div>
+          <div th:if="${donation.donorPhone}"
+               style="font-size:0.82rem;color:var(--text-mid);"
+               th:text="${donation.donorPhone}">Phone</div>
         </div>
-        <div class="col-6">
-          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Date</div>
-          <div style="font-weight:600;" th:text="${#temporals.format(donation.createdAt,'MMMM d, yyyy')}">Date</div>
+        <div class="col-sm-6">
+          <div class="receipt-label">Date of Gift</div>
+          <div class="receipt-value"
+               th:text="${#temporals.format(donation.createdAt,'MMMM d, yyyy')}">Date</div>
+          <div style="font-size:0.82rem;color:var(--text-mid);margin-top:2px;"
+               th:text="${#temporals.format(donation.createdAt,'h:mm a')}">Time</div>
         </div>
-        <div class="col-6">
-          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Amount</div>
-          <div style="font-size:1.8rem;font-weight:800;color:var(--primary);">$<span th:text="${donation.amount}">100</span></div>
+        <div class="col-sm-6">
+          <div class="receipt-label">Donation Amount</div>
+          <div style="font-size:2rem;font-weight:800;color:var(--primary);line-height:1;">
+            $<span th:text="${donation.amount}">0.00</span>
+          </div>
         </div>
-        <div class="col-6">
-          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Type</div>
-          <div style="font-weight:600;" th:text="${donation.donationType}">ONE_TIME</div>
+        <div class="col-sm-6">
+          <div class="receipt-label">Donation Type</div>
+          <div class="receipt-value" th:text="${donation.donationType == T(com.example.icoach.model.Donation.DonationType).ONE_TIME ? 'One-Time Gift' : 'Monthly Gift'}">Type</div>
         </div>
-        <div class="col-6">
-          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Designation</div>
-          <div th:text="${donation.purpose}">General Support</div>
+        <div class="col-sm-6">
+          <div class="receipt-label">Designated For</div>
+          <div class="receipt-value" th:text="${donation.purpose ?: 'General Support'}">Purpose</div>
         </div>
-        <div class="col-6">
-          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);">Status</div>
-          <span class="badge-status badge-success" th:text="${donation.status}">COMPLETED</span>
+        <div class="col-sm-6">
+          <div class="receipt-label">Payment Method</div>
+          <div class="receipt-value" th:text="${donation.paymentMethod ?: 'Online'}">Online</div>
         </div>
       </div>
+
       <hr class="divider"/>
-      <p style="font-size:0.82rem;color:var(--text-mid);line-height:1.7;">
-        Iowa Community Center is a registered 501(c)(3) nonprofit organization. No goods or services were provided in exchange for this contribution. This receipt may be used for tax purposes. Please consult your tax advisor regarding deductibility.
-      </p>
-      <div class="d-flex gap-3 mt-4 no-print flex-wrap">
-        <button id="printReceipt" class="btn-primary-custom" style="font-size:0.85rem;"><i class="fas fa-print me-1"></i> Print Receipt</button>
-        <a th:href="@{/}" class="btn-outline-primary" style="font-size:0.85rem;"><i class="fas fa-home me-1"></i> Back to Home</a>
+
+      <!-- Tax Statement -->
+      <div style="background:var(--bg-light);border-radius:var(--radius-sm);padding:16px 18px;">
+        <div style="font-weight:700;font-size:0.82rem;color:var(--primary);margin-bottom:8px;">
+          <i class="fas fa-info-circle me-1"></i> Tax Deductibility Statement
+        </div>
+        <p style="font-size:0.82rem;color:var(--text-mid);line-height:1.7;margin:0;">
+          Iowa Community Center is a registered 501(c)(3) nonprofit organization
+          (EIN: 82-4386292). No goods or services were provided in exchange for this
+          contribution. This receipt serves as your official record for tax purposes.
+          Please retain it for your records and consult your tax advisor regarding
+          deductibility.
+        </p>
       </div>
+
+      <!-- Actions -->
+      <div class="d-flex gap-3 mt-4 no-print flex-wrap">
+        <button id="printReceipt" class="btn-primary-custom" style="font-size:0.85rem;">
+          <i class="fas fa-print me-1"></i> Print Receipt
+        </button>
+        <a th:href="@{/donate}" class="btn-outline-primary" style="font-size:0.85rem;">
+          <i class="fas fa-heart me-1"></i> Donate Again
+        </a>
+        <a th:href="@{/}" class="btn-outline-primary" style="font-size:0.85rem;">
+          <i class="fas fa-home me-1"></i> Back to Home
+        </a>
+      </div>
+
+      <!-- Thank you note -->
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);text-align:center;font-size:0.82rem;color:var(--text-mid);">
+        <i class="fas fa-heart me-1" style="color:var(--accent);"></i>
+        Thank you for your generous support of Iowa Community Center.
+        Your gift makes a real difference in the lives of families in our community.
+      </div>
+
     </div>
   </div>
 </section>
+
 <div th:replace="~{fragments/footer :: footer}" class="no-print"></div>
 </body>
 </html>
