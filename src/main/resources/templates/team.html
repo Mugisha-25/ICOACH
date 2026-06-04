@@ -3,31 +3,105 @@
 <head th:replace="~{fragments/header :: head('Our Team')}"></head>
 <body>
 <nav th:replace="~{fragments/header :: navbar}"></nav>
+
 <section class="page-hero">
   <div class="container">
     <h1>Our Team &amp; Board</h1>
-    <p>Meet the dedicated people who make ICC's work possible</p>
+    <p>Meet the dedicated people who make Iowa Community Center's work possible</p>
     <div class="breadcrumb-custom"><a href="/">Home</a><span>/</span><span>Team</span></div>
   </div>
 </section>
+
+<!-- Staff -->
 <section class="section-pad">
   <div class="container">
     <div class="section-header fade-up">
-      <div class="overline">Staff</div>
+      <div class="overline">Our People</div>
       <h2>Leadership &amp; Staff</h2>
-      <p>Our team brings decades of combined experience in social services, education, and community development.</p>
+      <p>
+        Our team brings dedicated experience in education, social services, community development,
+        and nonprofit administration — all united by a passion for serving families.
+      </p>
     </div>
-    <div class="row g-4">
-      <div th:each="member : ${staff}" class="col-sm-6 col-lg-4 fade-up">
+
+    <div class="row g-4 justify-content-center">
+      <div th:each="member : ${staff}" class="col-sm-6 col-lg-3 fade-up">
         <div class="team-card">
-          <div class="team-card-photo"><img th:src="${member.imageUrl}" th:alt="${member.fullName}"/></div>
+          <div class="team-card-photo">
+            <img th:src="${member.imageUrl}" th:alt="${member.fullName}"/>
+          </div>
           <div class="team-card-body">
             <h5 th:text="${member.fullName}">Name</h5>
             <div class="title-text" th:text="${member.title}">Title</div>
-            <p th:text="${#strings.abbreviate(member.bio, 140)}">Bio</p>
+            <p th:text="${#strings.abbreviate(member.bio, 150)}">Bio</p>
             <div class="team-social">
-              <a th:if="${member.email}" th:href="'mailto:'+${member.email}" title="Email"><i class="fas fa-envelope"></i></a>
-              <a th:if="${member.linkedin}" th:href="${member.linkedin}" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a th:if="${member.email}" th:href="'mailto:' + ${member.email}" title="Email">
+                <i class="fas fa-envelope"></i>
+              </a>
+              <a th:if="${member.linkedin}" th:href="${member.linkedin}" target="_blank" title="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div th:if="${#lists.isEmpty(staff)}" class="col-12 text-center py-4">
+        <p style="color:var(--text-mid);">Team information coming soon.</p>
+      </div>
+    </div>
+
+    <!-- Org contact under staff -->
+    <div class="team-org-bar fade-up mt-5">
+      <div class="row align-items-center g-2">
+        <div class="col-md-6">
+          <div style="font-weight:700;color:var(--primary);margin-bottom:4px;">Iowa Community Center</div>
+          <div style="font-size:0.85rem;color:var(--text-mid);">
+            <i class="fas fa-map-marker-alt me-1" style="color:var(--accent);"></i>
+            4300 Beaver Avenue, Des Moines, IA 50310
+          </div>
+        </div>
+        <div class="col-md-6 d-flex gap-3 justify-content-md-end flex-wrap">
+          <a href="tel:5155059109" style="font-size:0.85rem;color:var(--text-mid);display:flex;align-items:center;gap:6px;">
+            <i class="fas fa-phone" style="color:var(--accent);"></i> 515-505-9109
+          </a>
+          <a href="mailto:info@icoachiowa.org" style="font-size:0.85rem;color:var(--text-mid);display:flex;align-items:center;gap:6px;">
+            <i class="fas fa-envelope" style="color:var(--accent);"></i> info@icoachiowa.org
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Board of Directors -->
+<section class="section-pad section-alt" th:if="${not #lists.isEmpty(board)}">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="overline">Governance</div>
+      <h2>Board of Directors</h2>
+      <p>
+        Our volunteer board provides strategic guidance, organizational oversight, and community
+        representation for Iowa Community Center.
+      </p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      <div th:each="member : ${board}" class="col-sm-6 col-md-4 col-lg-3 fade-up">
+        <div class="team-card">
+          <div class="team-card-photo">
+            <img th:src="${member.imageUrl}" th:alt="${member.fullName}"/>
+          </div>
+          <div class="team-card-body">
+            <h5 th:text="${member.fullName}">Name</h5>
+            <div class="title-text" th:text="${member.title}">Title</div>
+            <div th:if="${member.profession}"
+                 style="font-size:0.78rem;color:var(--text-light);margin-top:4px;"
+                 th:text="${member.profession}">Profession</div>
+            <div th:if="${member.term}"
+                 style="font-size:0.75rem;color:var(--text-mid);margin-top:6px;">
+              <i class="fas fa-calendar me-1" style="color:var(--accent);font-size:0.7rem;"></i>
+              <span th:text="${member.term}">Term</span>
             </div>
           </div>
         </div>
@@ -35,38 +109,31 @@
     </div>
   </div>
 </section>
-<section class="section-pad section-alt" th:if="${not #lists.isEmpty(board)}">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="overline">Governance</div>
-      <h2>Board of Directors</h2>
-    </div>
-    <div class="row g-4 justify-content-center">
-      <div th:each="member : ${board}" class="col-sm-6 col-lg-3 fade-up">
-        <div class="team-card">
-          <div class="team-card-photo"><img th:src="${member.imageUrl}" th:alt="${member.fullName}"/></div>
-          <div class="team-card-body">
-            <h5 th:text="${member.fullName}">Name</h5>
-            <div class="title-text" th:text="${member.title}">Title</div>
-            <div style="font-size:0.78rem;color:var(--text-light);margin-bottom:8px;" th:text="${member.profession}">Profession</div>
-            <p style="font-size:0.8rem;" th:text="${#strings.abbreviate(member.bio,100)}">Bio</p>
-            <div style="font-size:0.75rem;color:var(--text-mid);">Term: <span th:text="${member.term}">2022</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+
+<!-- CTA -->
 <section class="cta-section">
   <div class="container text-center">
-    <h2>Join Our Team</h2>
-    <p>We're always looking for passionate volunteers and professionals who share our commitment to community.</p>
+    <h2>Join Iowa Community Center</h2>
+    <p>
+      We are always looking for passionate volunteers and professionals who share our commitment
+      to empowering families and strengthening our community.
+    </p>
     <div class="d-flex gap-3 justify-content-center flex-wrap mt-4">
-      <a th:href="@{/volunteer}" class="btn-accent"><i class="fas fa-hands-helping"></i> Volunteer</a>
-      <a th:href="@{/contact}" class="btn-outline-white"><i class="fas fa-envelope"></i> Contact Us</a>
+      <a th:href="@{/volunteer}" class="btn-accent">
+        <i class="fas fa-hands-helping me-2"></i>Volunteer With Us
+      </a>
+      <a th:href="@{/contact}" class="btn-outline-white">
+        <i class="fas fa-envelope me-2"></i>Contact Us
+      </a>
     </div>
+    <p style="color:rgba(255,255,255,0.55);font-size:0.82rem;margin-top:20px;">
+      <i class="fas fa-phone me-1"></i> 515-505-9109 &nbsp;&bull;&nbsp;
+      <i class="fas fa-envelope me-1"></i> info@icoachiowa.org &nbsp;&bull;&nbsp;
+      <i class="fas fa-map-marker-alt me-1"></i> 4300 Beaver Avenue, Des Moines, IA 50310
+    </p>
   </div>
 </section>
+
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

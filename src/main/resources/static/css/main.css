@@ -1174,3 +1174,13 @@ img { max-width: 100%; height: auto; }
   box-shadow: var(--shadow);
 }
 [data-theme="dark"] .events-contact-strip { background: var(--dm-surface); border-color: var(--dm-border); }
+
+/* ===== TEAM PAGE ===== */
+.team-org-bar {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 24px;
+  box-shadow: var(--shadow);
+}
+[data-theme="dark"] .team-org-bar { background: var(--dm-surface); border-color: var(--dm-border); }
